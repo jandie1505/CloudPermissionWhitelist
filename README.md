@@ -9,6 +9,7 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 |--|--|
 | cloudpermissionwhitelist.* | Allow to join all task's services |
 | cloudpermissionwhitelist.[TaskName] | Allow to join a specific task's services |
+
 Users with the * permission usually also have permission to join all task's services.
 ## Bugs
 Create an issue on GitHub instead of writing a bad review.
