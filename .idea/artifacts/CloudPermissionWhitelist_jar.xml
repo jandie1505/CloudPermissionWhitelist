@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CloudPermissionWhitelist:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CloudPermissionWhitelist_jar</output-path>
+    <root id="archive" name="CloudPermissionWhitelist.jar">
+      <element id="module-output" name="CloudPermissionWhitelist" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/dev/jorel/commandapi/commandapi-shade/5.12/commandapi-shade-5.12.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,13 @@
+main: net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist
+name: CloudPermissionWhitelist
+version: 1.0
+api-version: 1.16
+website: jandie1505.net
+
+permissions:
+  cloudpermissionwhitelist.*:
+    default: false
+    description: Allow the join on ALL servers
+  cloudpermissionwhitelist.<TaskName>:
+    default: false
+    description: Allow the join on <TaskName>
