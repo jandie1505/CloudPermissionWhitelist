@@ -40,11 +40,17 @@ public class CloudPermissionWhitelist extends JavaPlugin implements Listener {
                     p.sendMessage("§aKicked player " + target.getName());
                     target.kickPlayer((String) args[1]);
                     System.out.println("[CloudPermissionWhitelist] Kicked player" + target.getName());
+                    if(tempAllowed.containsKey(target.getUniqueId())){
+                        tempAllowed.remove(target.getUniqueId());
+                    }
                 })
                 .executesConsole((sender, args) -> {
                     Player target = (Player) args[0];
                     System.out.println("§aKicked player " + target.getName());
                     target.kickPlayer((String) args[1]);
+                    if(tempAllowed.containsKey(target.getUniqueId())){
+                        tempAllowed.remove(target.getUniqueId());
+                    }
                 });
         CommandAPICommand allowTempJoin = new CommandAPICommand("allowtempjoin")
                 .withPermission("cloudpermissionwhitelist.allowtempjoin")
