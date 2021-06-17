@@ -1,13 +1,34 @@
 main: net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist
 name: CloudPermissionWhitelist
-version: 1.0
+version: 1.1
 api-version: 1.16
 website: jandie1505.net
 
 permissions:
-  cloudpermissionwhitelist.*:
+  cloudpermissionwhitelist.join.*:
     default: false
     description: Allow the join on ALL servers
-  cloudpermissionwhitelist.<TaskName>:
+  cloudpermissionwhitelist.join.<TaskName>:
     default: false
     description: Allow the join on <TaskName>
+  cloudpermissionwhitelist.localkick:
+    default: op
+    description: Allows to use the /localkick command
+  cloudpermissionwhitelist.allowtempjoin:
+    default: false
+    description: Allows to use the /allowtempjoin command
+  cloudpermissionwhitelist.denytempjoin:
+    default: false
+    description: Allows to use the /denytempjoin command
+  cloudpermissionwhitelist.listtempjoin:
+    default: op
+    description: Allows to use the /listtempjoin command
+  cloudpermissionwhitelist.*:
+    default: false
+    description: Wildcard permission
+    children:
+      cloudpermissionwhitelist.join.*: true
+      cloudpermissionwhitelist.localkick: true
+      cloudpermissionwhitelist.allowtempjoin: true
+      cloudpermissionwhitelist.denytempjoin: true
+      cloudpermissionwhitelist.listtempjoin: true
