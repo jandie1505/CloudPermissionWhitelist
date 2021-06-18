@@ -100,6 +100,12 @@ public class CloudPermissionWhitelist extends JavaPlugin implements Listener {
                     for(UUID playerid : tempAllowedPlayerArray){
                         p.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName());
                     }
+                })
+                .executesConsole((sender, args) -> {
+                    System.out.println("§aPlayers that can join:");
+                    for(UUID playerid : tempAllowedPlayerArray){
+                        System.out.println("§7" + Bukkit.getOfflinePlayer(playerid).getName());
+                    }
                 });
 
         localKick.register();
