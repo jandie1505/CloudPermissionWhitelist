@@ -1,6 +1,5 @@
 package net.jandie1505.CloudPermissionWhitelist;
 
-import com.google.common.collect.ArrayListMultimap;
 import de.dytanic.cloudnet.wrapper.Wrapper;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -31,6 +30,28 @@ public class CloudPermissionWhitelist extends JavaPlugin implements Listener {
     public void onLoad(){
         CommandAPI.onLoad(false);
         CommandAPICommand localKick = new CommandAPICommand("localkick")
+                .withPermission("cloudpermissionwhitelist.localkick")
+                .withArguments(new PlayerArgument("Player"))
+                .executesPlayer((sender, args) -> {
+                    Player p = (Player) sender;
+                    Player target = (Player) args[0];
+                    p.sendMessage("§aKicked player " + target.getName());
+                    target.kickPlayer("You was kicked from the server");
+                    System.out.println("[CloudPermissionWhitelist] Kicked player" + target.getName());
+                    if(tempAllowed.containsKey(target.getUniqueId())){
+                        tempAllowed.remove(target.getUniqueId());
+                    }
+                })
+                .executesConsole((sender, args) -> {
+                    Player target = (Player) args[0];
+                    System.out.println("§aKicked player " + target.getName());
+                    target.kickPlayer("You was kicked from the server");
+                    if(tempAllowed.containsKey(target.getUniqueId())){
+                        tempAllowed.remove(target.getUniqueId());
+                    }
+                });
+
+        CommandAPICommand localKickReason = new CommandAPICommand("localkick")
                 .withPermission("cloudpermissionwhitelist.localkick")
                 .withArguments(new PlayerArgument("Player"))
                 .withArguments(new GreedyStringArgument("Reason"))
@@ -92,6 +113,20 @@ public class CloudPermissionWhitelist extends JavaPlugin implements Listener {
                     }
                 });
 
+        CommandAPICommand denyAllTempJoin = new CommandAPICommand("denyalltempjoin")
+                .withPermission("cloudpermissionwhitelist.denyalltempjoin")
+                .withAliases("disallowalltempjoin")
+                .executesPlayer((sender, args) -> {
+                    Player p = (Player) sender;
+                    tempAllowed.clear();
+                    p.sendMessage("§aList of temp join players was cleared");
+                    System.out.println("[CloudPermissionWhitelist] List of temp join players was cleared");
+                })
+                .executesConsole((sender, args) -> {
+                    tempAllowed.clear();
+                    System.out.println("§aList of temp join players was cleared");
+                });
+
         CommandAPICommand listTempJoin = new CommandAPICommand("listtempjoin")
                 .withPermission("cloudpermissionwhitelist.listtempjoin")
                 .executesPlayer((sender, args) -> {
@@ -109,9 +144,11 @@ public class CloudPermissionWhitelist extends JavaPlugin implements Listener {
                 });
 
         localKick.register();
+        localKickReason.register();
         allowTempJoin.register();
         denyTempJoin.register();
         listTempJoin.register();
+        denyAllTempJoin.register();
     }
 
     @Override
