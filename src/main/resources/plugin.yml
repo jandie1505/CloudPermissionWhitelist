@@ -1,7 +1,7 @@
 main: net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist
 name: CloudPermissionWhitelist
 version: 1.2
-api-version: 1.16
+api-version: 1.17
 website: jandie1505.net
 
 permissions:
