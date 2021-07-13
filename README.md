@@ -10,6 +10,7 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 | /allowtempjoin [Player] | cloudpermissionwhitelist.allowtempjoin | Allows a player to join the server for 5 minutes |
 | /denytempjoin [Player] | cloudpermissionwhitelist.denytempjoin | Recalls the permission to enter the server temporarily |
 | /listtempjoin | cloudpermissionwhitelist.listtempjoin | Lists all players that can join temporary |
+| /denyalltempjoin | cloudpermissionwhitelist.denyalltempjoin | Recalls the permission to enter the server temorarily for all players |
 | /localkick [Player] | cloudpermissionwhitelist.localkick | Allows to kick players via the /localkick command |
 
 ## Permissions
