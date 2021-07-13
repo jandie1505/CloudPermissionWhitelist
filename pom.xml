@@ -19,10 +19,6 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
             <id>releases</id>
             <url>https://repo.cloudnetservice.eu/repository/releases/</url>
         </repository>
@@ -34,11 +30,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.17-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.jorel.CommandAPI</groupId>
-            <artifactId>commandapi-shade</artifactId>
-            <version>6.0.5</version>
         </dependency>
         <dependency>
             <groupId>de.dytanic.cloudnet</groupId>
