@@ -1,7 +1,7 @@
 # CloudPermissionWhitelist
 A plugin for the CloudNet v3 cloud system, which ensures that you can only join certain tasks with a certain permission.
 ## Installation
-1. Download the Plugin
+1. Download the Plugin from the releases page
 2. Put the CloudPermissionWhitelist.jar into [CloudNet Directory]/local/templates/Global/server/plugins/ (If the plugins folder does not exist create it).
 3. Restart your services
 ## Commands
