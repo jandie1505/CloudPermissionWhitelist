@@ -23,7 +23,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     public void onEnable(){
         plugin = this;
         taskName = Wrapper.getInstance().getServiceId().getTaskName();
-        this.getLogger().info("[CloudPermissionWhitelist] Task: " + taskName + "" +
+        this.getLogger().info("[CloudPermissionWhitelist] Task: " + taskName + "\n" +
                 "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
         Bukkit.getServer().getPluginManager().registerEvents(new Events(), this);
         getCommand("localkick").setExecutor(new CmdLocalKick());
