@@ -15,17 +15,17 @@ public class CmdDenyAllTempJoin implements CommandExecutor, TabCompleter {
             if(args.length == 0){
                 CloudPermissionWhitelist.getTempAllowed().clear();
                 p.sendMessage("§aList of temp join players was cleared");
-                System.out.println("[CloudPermissionWhitelist] List of temp join players was cleared");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] List of temp join players was cleared");
             } else {
                 p.sendMessage("§cUse /denyalltempjoin");
             }
         } else if(sender instanceof ConsoleCommandSender){
             if(args.length == 0){
                 CloudPermissionWhitelist.getTempAllowed().clear();
-                System.out.println("§aList of temp join players was cleared");
-                System.out.println("[CloudPermissionWhitelist] List of temp join players was cleared");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§aList of temp join players was cleared");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] List of temp join players was cleared");
             } else {
-                System.out.println("§cUse denyalltempjoin");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse denyalltempjoin");
             }
         }
         return true;

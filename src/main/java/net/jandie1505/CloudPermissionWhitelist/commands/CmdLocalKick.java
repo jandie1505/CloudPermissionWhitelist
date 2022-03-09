@@ -44,7 +44,7 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
                 Player target = Bukkit.getPlayer(args[0]);
                 if(target != null){
                     target.kickPlayer("You have been kicked from the server");
-                    System.out.println("§aKicked " + target.getName());
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("§aKicked " + target.getName());
                     if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
                         CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
                     }
@@ -53,13 +53,13 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
                 Player target = Bukkit.getPlayer(args[0]);
                 if(target != null){
                     target.kickPlayer(args[1]);
-                    System.out.println("§aKicked " + target.getName() + "§a for " + args[1]);
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("§aKicked " + target.getName() + "§a for " + args[1]);
                     if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
                         CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
                     }
                 }
             } else {
-                System.out.println("§cUse localkick <Player> <Reason>");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse localkick <Player> <Reason>");
             }
         }
         return true;

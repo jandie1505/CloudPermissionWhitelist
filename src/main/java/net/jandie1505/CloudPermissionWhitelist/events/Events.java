@@ -13,13 +13,13 @@ public class Events implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event){
         Player target = event.getPlayer();
         if(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")){
-            System.out.println("[CloudPermissionWhitelist] Login allowed for " + target.getName());
+            CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login allowed for " + target.getName());
             event.allow();
         } else if(CloudPermissionWhitelist.canPlayerJoin(target)){
-            System.out.println("[CloudPermissionWhitelist] Login temporary allowed for " + target.getName());
+            CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login temporary allowed for " + target.getName());
             event.allow();
         } else {
-            System.out.println("[CloudPermissionWhitelist] Login denied for " + target.getName());
+            CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login denied for " + target.getName());
             event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "§cYou don't have the permission to join this server");
         }
     }

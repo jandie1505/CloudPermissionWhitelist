@@ -19,7 +19,7 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                     CloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), 300);
                     p.sendMessage("§a" + target.getName() + " can now join for 5 minutes");
-                    System.out.println("[CloudPermissionWhitelist] " + target.getName() + " can now join for 5 minutes");
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + target.getName() + " can now join for 5 minutes");
                 } else {
                     p.sendMessage("§cUse /allowtempjoin <Player>");
                 }
@@ -30,10 +30,10 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
             if(args.length == 1){
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                 CloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), 300);
-                System.out.println("§a" + target.getName() + " can now join for 5 minutes");
-                System.out.println("[CloudPermissionWhitelist] " + target.getName() + " can now join for 5 minutes");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§a" + target.getName() + " can now join for 5 minutes");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + target.getName() + " can now join for 5 minutes");
             } else {
-                System.out.println("§cUse allowtempjoin <Player>");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse allowtempjoin <Player>");
             }
         }
         return true;

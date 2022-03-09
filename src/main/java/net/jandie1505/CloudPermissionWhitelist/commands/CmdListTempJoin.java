@@ -24,12 +24,12 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
             }
         } else if(sender instanceof ConsoleCommandSender){
             if(args.length == 0){
-                System.out.println("§aPlayers that can join:");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§aPlayers that can join:");
                 for(UUID playerid : CloudPermissionWhitelist.getTempAllowedPlayerArray()){
-                    System.out.println("§7" + Bukkit.getOfflinePlayer(playerid).getName());
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("§7" + Bukkit.getOfflinePlayer(playerid).getName());
                 }
             } else {
-                System.out.println("§cUse /listtempjoin");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse /listtempjoin");
             }
         }
         return true;

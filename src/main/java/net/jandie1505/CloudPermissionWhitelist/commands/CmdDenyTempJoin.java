@@ -20,7 +20,7 @@ public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
                     if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
                         CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
                         p.sendMessage("§a" + target.getName() + " can't join anymore");
-                        System.out.println("[CloudPermissionWhitelist] " + target.getName() + " can't join anymore");
+                        CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + target.getName() + " can't join anymore");
                     } else {
                         p.sendMessage("§cThis player already can't join");
                     }
@@ -35,13 +35,13 @@ public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                 if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
                     CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
-                    System.out.println("§a" + target.getName() + " can't join anymore");
-                    System.out.println("[CloudPermissionWhitelist] " + target.getName() + " can't join anymore");
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("§a" + target.getName() + " can't join anymore");
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + target.getName() + " can't join anymore");
                 } else {
-                    System.out.println("§cThis player already can't join");
+                    CloudPermissionWhitelist.getPlugin().getLogger().info("§cThis player already can't join");
                 }
             } else {
-                System.out.println("§cUse denytempjoin <Player>");
+                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse denytempjoin <Player>");
             }
         }
         return true;
