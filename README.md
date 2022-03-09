@@ -23,5 +23,8 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 The command permissions are listed at the command section.
 
 Users with the * permission usually also have permission to join all task's services.
+## Version support for lower versions
+Officially, only 1.13 and higher is supported.
+If the plugin is needed for a lower Minecraft version, open the JAR archive with e.g. 7-zip and set the api-version item in the plugin.yml file to the desired version. However, this is not supported and errors may occur.
 ## Bugs
 Create an issue on GitHub instead of writing a bad review.
