@@ -56,11 +56,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     }
 
     public static boolean canPlayerJoin(Player player){
-        if(tempAllowed.containsKey(player.getUniqueId()) && tempAllowed.get(player.getUniqueId()) > 0){
-            return true;
-        } else {
-            return false;
-        }
+        return tempAllowed.containsKey(player.getUniqueId()) && tempAllowed.get(player.getUniqueId()) > 0;
     }
 
     public static CloudPermissionWhitelist getPlugin(){
