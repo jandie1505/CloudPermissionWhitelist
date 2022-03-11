@@ -13,56 +13,64 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if(sender instanceof Player){
-            Player p = (Player) sender;
-            if(p.hasPermission("cloudpermissionwhitelist.localkick")){
-                if(args.length == 1){
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(target != null){
-                        target.kickPlayer("You have been kicked from the server");
-                        p.sendMessage("§aKicked " + target.getName());
-                        if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
-                            CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
-                        }
-                    }
-                } else if(args.length == 2){
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(target != null){
-                        target.kickPlayer(args[1]);
-                        p.sendMessage("§aKicked " + target.getName() + "§a for " + args[1]);
-                        if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
-                            CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
-                        }
-                    }
-                } else {
-                    p.sendMessage("§cUse /localkick <Player> <Reason>");
-                }
-            } else {
-                p.sendMessage("§cYou don't have the permission to use this command");
-            }
+            this.playerCommandSender((Player) sender, args);
         } else if(sender instanceof ConsoleCommandSender){
-            if(args.length == 1){
-                Player target = Bukkit.getPlayer(args[0]);
-                if(target != null){
-                    target.kickPlayer("You have been kicked from the server");
-                    CloudPermissionWhitelist.getPlugin().getLogger().info("§aKicked " + target.getName());
-                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
-                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
-                    }
-                }
-            } if(args.length == 2){
-                Player target = Bukkit.getPlayer(args[0]);
-                if(target != null){
-                    target.kickPlayer(args[1]);
-                    CloudPermissionWhitelist.getPlugin().getLogger().info("§aKicked " + target.getName() + "§a for " + args[1]);
-                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())){
-                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
-                    }
-                }
-            } else {
-                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse localkick <Player> <Reason>");
-            }
+            this.consoleCommandSender((ConsoleCommandSender) sender, args);
         }
         return true;
+    }
+
+    private void playerCommandSender(Player p, String[] args) {
+        if(p.hasPermission("cloudpermissionwhitelist.localkick")) {
+            if(args.length == 1) {
+                Player target = Bukkit.getPlayer(args[0]);
+                if(target != null) {
+                    target.kickPlayer("You have been kicked from the server");
+                    p.sendMessage("§aKicked " + target.getName());
+                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
+                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                    }
+                }
+            } else if(args.length == 2) {
+                Player target = Bukkit.getPlayer(args[0]);
+                if(target != null) {
+                    target.kickPlayer(args[1]);
+                    p.sendMessage("§aKicked " + target.getName() + "§a for " + args[1]);
+                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
+                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                    }
+                }
+            } else {
+                p.sendMessage("§cUse /localkick <Player> <Reason>");
+            }
+        } else {
+            p.sendMessage("§cYou don't have the permission to use this command");
+        }
+    }
+
+    private void consoleCommandSender(ConsoleCommandSender console, String[] args) {
+        if(args.length == 1) {
+            Player target = Bukkit.getPlayer(args[0]);
+            if(target != null) {
+                target.kickPlayer("You have been kicked from the server");
+                console.sendMessage("§aKicked " + target.getName());
+                if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
+                    CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                }
+            }
+        } if(args.length == 2) {
+            Player target = Bukkit.getPlayer(args[0]);
+            if(target != null) {
+                target.kickPlayer(args[1]);
+                console.sendMessage("§aKicked " + target.getName() + "§a for " + args[1]);
+                if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
+                    CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+
+                }
+            }
+        } else {
+            CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse localkick <Player> <Reason>");
+        }
     }
 
     @Override

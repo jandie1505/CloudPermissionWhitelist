@@ -12,28 +12,29 @@ import java.util.List;
 public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-        if(sender instanceof Player){
+        if(sender instanceof Player) {
             Player p = (Player) sender;
-            if(p.hasPermission("cloudpermissionwhitelist.allowtempjoin")){
-                if(args.length == 1){
+            if(p.hasPermission("cloudpermissionwhitelist.allowtempjoin")) {
+                if(args.length == 1) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                     CloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), 300);
                     p.sendMessage("§a" + target.getName() + " can now join for 5 minutes");
-                    CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + target.getName() + " can now join for 5 minutes");
+                    CloudPermissionWhitelist.getPlugin().getLogger().info(target.getName() + " can now join for 5 minutes");
                 } else {
                     p.sendMessage("§cUse /allowtempjoin <Player>");
                 }
             } else {
                 p.sendMessage("§cYou don't have the permission to use this command");
             }
-        } else if(sender instanceof ConsoleCommandSender){
-            if(args.length == 1){
+        } else if(sender instanceof ConsoleCommandSender) {
+            ConsoleCommandSender console = (ConsoleCommandSender) sender;
+            if(args.length == 1) {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
                 CloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), 300);
-                CloudPermissionWhitelist.getPlugin().getLogger().info("§a" + target.getName() + " can now join for 5 minutes");
-                CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + target.getName() + " can now join for 5 minutes");
+                console.sendMessage("§a" + target.getName() + " can now join for 5 minutes");
+                CloudPermissionWhitelist.getPlugin().getLogger().info(target.getName() + " can now join for 5 minutes");
             } else {
-                CloudPermissionWhitelist.getPlugin().getLogger().info("§cUse allowtempjoin <Player>");
+                console.sendMessage("§cUse allowtempjoin <Player>");
             }
         }
         return true;
