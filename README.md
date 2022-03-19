@@ -28,3 +28,5 @@ Officially, only 1.13 and higher is supported.
 If the plugin is needed for a lower Minecraft version, open the JAR archive with e.g. 7-zip and set the api-version item in the plugin.yml file to the desired version. However, this is not supported and errors may occur.
 ## Bugs
 Create an issue on GitHub instead of writing a bad review.
+## Some other stuff
+[![CodeFactor](https://www.codefactor.io/repository/github/jandie1505/cloudpermissionwhitelist/badge)](https://www.codefactor.io/repository/github/jandie1505/cloudpermissionwhitelist)
