@@ -17,7 +17,7 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
             if(args.length == 0) {
                 p.sendMessage("§aPlayers that can join:");
                 for(UUID playerid : CloudPermissionWhitelist.getTempAllowedPlayerArray()){
-                    p.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName());
+                    p.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName() + " (" + CloudPermissionWhitelist.getTempAllowed().get(Bukkit.getOfflinePlayer(playerid).getUniqueId()) + ")");
                 }
             } else {
                 p.sendMessage("§cUse /listtempjoin");
@@ -27,7 +27,7 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
             if(args.length == 0) {
                 console.sendMessage("§aPlayers that can join:");
                 for(UUID playerid : CloudPermissionWhitelist.getTempAllowedPlayerArray()){
-                    console.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName());
+                    console.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName() + " (" + CloudPermissionWhitelist.getTempAllowed().get(Bukkit.getOfflinePlayer(playerid).getUniqueId()) + ")");
                 }
             } else {
                 console.sendMessage("§cUse /listtempjoin");
