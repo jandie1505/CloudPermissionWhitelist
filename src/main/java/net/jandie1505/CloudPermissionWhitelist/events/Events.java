@@ -33,7 +33,7 @@ public class Events implements Listener {
             target.sendMessage("§aYou could join this server because an admin gave you temporary access\nIf you disconnect, you might can't join anymore");
         }
         if(Config.getUpdateCheck() && Config.getUpdateNotifyPlayer() && UpdateChecker.isUpdateAvailable() && target.hasPermission("cloudpermissionwhitelist.updatenotify")) {
-            target.sendRawMessage("[\"\",{\"text\":\"An Update for CloudPermissionWhitelist is available\\nDownload it on \",\"color\":\"aqua\"},{\"text\":\"GitHub\",\"underlined\":true,\"color\":\"aqua\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://github.com/jandie1505/CloudPermissionWhitelist/releases\"}},{\"text\":\" or \",\"color\":\"aqua\"},{\"text\":\"SpigotMC\",\"underlined\":true,\"color\":\"aqua\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/cloudpermissionwhitelist-for-cloudnet-v3.93250/\"}}]");
+            target.sendRawMessage("§bAn update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
         }
     }
 }
