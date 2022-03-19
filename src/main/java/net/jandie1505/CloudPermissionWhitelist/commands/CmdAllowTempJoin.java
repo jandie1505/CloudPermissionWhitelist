@@ -1,6 +1,7 @@
 package net.jandie1505.CloudPermissionWhitelist.commands;
 
 import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
+import net.jandie1505.CloudPermissionWhitelist.misc.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
@@ -17,7 +18,7 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
             if(p.hasPermission("cloudpermissionwhitelist.allowtempjoin")) {
                 if(args.length == 1) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                    CloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), 300);
+                    CloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), Config.getTempJoinTime());
                     p.sendMessage("§a" + target.getName() + " can now join for 5 minutes");
                     CloudPermissionWhitelist.getPlugin().getLogger().info(target.getName() + " can now join for 5 minutes");
                 } else {

@@ -3,3 +3,4 @@ updateCheck:
   check: true
   notifyConsole: true
   notifyPlayer: true
+tempJoinTime: 300

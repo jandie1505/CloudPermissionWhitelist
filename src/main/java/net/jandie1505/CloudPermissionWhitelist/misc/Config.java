@@ -15,6 +15,7 @@ public class Config {
     private static boolean updateCheck = false;
     private static boolean updateNotifyConsole = false;
     private static boolean updateNotifyPlayer = false;
+    private static int tempJoinTime = 300;
 
     public static void load() {
         createCustomConfig();
@@ -22,16 +23,27 @@ public class Config {
         updateCheck = config.getBoolean("updateCheck.check");
         updateNotifyConsole = config.getBoolean("updateCheck.notifyConsole");
         updateNotifyPlayer = config.getBoolean("updateCheck.notifyPlayer");
+
+        int tempJoinTimeCheck = tempJoinTime = config.getInt("tempJoinTime");
+        if(tempJoinTimeCheck > 0 && tempJoinTimeCheck < 1800) {
+            tempJoinTime = tempJoinTimeCheck;
+        }
     }
 
     public static boolean getUpdateCheck() {
         return updateCheck;
     }
+
     public static boolean getUpdateNotifyConsole() {
         return updateNotifyConsole;
     }
+
     public static boolean getUpdateNotifyPlayer() {
         return updateNotifyPlayer;
+    }
+
+    public static int getTempJoinTime() {
+        return tempJoinTime;
     }
 
     // CONFIG FILE
