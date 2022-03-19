@@ -18,15 +18,19 @@ public class Config {
     private static int tempJoinTime = 300;
 
     public static void load() {
-        createCustomConfig();
+        try {
+            createCustomConfig();
 
-        updateCheck = config.getBoolean("updateCheck.check");
-        updateNotifyConsole = config.getBoolean("updateCheck.notifyConsole");
-        updateNotifyPlayer = config.getBoolean("updateCheck.notifyPlayer");
+            updateCheck = config.getBoolean("updateCheck.check");
+            updateNotifyConsole = config.getBoolean("updateCheck.notifyConsole");
+            updateNotifyPlayer = config.getBoolean("updateCheck.notifyPlayer");
 
-        int tempJoinTimeCheck = tempJoinTime = config.getInt("tempJoinTime");
-        if(tempJoinTimeCheck > 0 && tempJoinTimeCheck < 1800) {
-            tempJoinTime = tempJoinTimeCheck;
+            int tempJoinTimeCheck = tempJoinTime = config.getInt("tempJoinTime");
+            if(tempJoinTimeCheck > 0 && tempJoinTimeCheck < 1800) {
+                tempJoinTime = tempJoinTimeCheck;
+            }
+        } catch(Exception e) {
+            CloudPermissionWhitelist.getPlugin().getLogger().warning("Error with config, using internal default values");
         }
     }
 
