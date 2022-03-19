@@ -1,0 +1,5 @@
+# Configuration file of CloudPermissionWhitelist
+updateCheck:
+  check: true
+  notifyConsole: true
+  notifyPlayer: true

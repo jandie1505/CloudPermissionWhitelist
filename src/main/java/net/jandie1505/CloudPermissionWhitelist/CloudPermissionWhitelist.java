@@ -2,7 +2,9 @@ package net.jandie1505.CloudPermissionWhitelist;
 
 import de.dytanic.cloudnet.wrapper.Wrapper;
 import net.jandie1505.CloudPermissionWhitelist.commands.*;
+import net.jandie1505.CloudPermissionWhitelist.misc.Config;
 import net.jandie1505.CloudPermissionWhitelist.events.Events;
+import net.jandie1505.CloudPermissionWhitelist.misc.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,11 +20,13 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     private static HashMap<UUID, Integer> tempAllowed = new HashMap<UUID, Integer>();
     private static ArrayList<UUID> tempAllowedPlayerArray = new ArrayList<UUID>();
     int mainTask;
+    int consoleUpdateNotificationTask;
 
     @Override
     public void onEnable(){
         plugin = this;
         taskName = Wrapper.getInstance().getServiceId().getTaskName();
+        Config.load();
         this.getLogger().info("Task: " + taskName + "\n" +
                 "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
         Bukkit.getServer().getPluginManager().registerEvents(new Events(), this);
@@ -53,6 +57,20 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 }
             }
         }, 0, 20);
+        if(Config.getUpdateCheck()) {
+            consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    if(Config.getUpdateCheck()) {
+                        UpdateChecker.refreshUpdateStatus();
+
+                        if(Config.getUpdateNotifyConsole() && UpdateChecker.isUpdateAvailable()) {
+                            Bukkit.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
+                        }
+                    }
+                }
+            }, 0, 144000);
+        }
     }
 
     public static boolean canPlayerJoin(Player player){

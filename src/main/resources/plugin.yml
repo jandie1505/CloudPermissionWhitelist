@@ -1,6 +1,6 @@
 main: net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist
 name: CloudPermissionWhitelist
-version: 3.1
+version: 3.2
 api-version: 1.13
 website: jandie1505.net
 
@@ -45,6 +45,9 @@ permissions:
   cloudpermissionwhitelist.listtempjoin:
     default: op
     description: Allows to use the /listtempjoin command
+  cloudpermissionwhitelist.updatenotify:
+    default: op
+    description: Receive update notifications when enabled
   cloudpermissionwhitelist.*:
     default: op
     description: Wildcard permission
@@ -54,3 +57,4 @@ permissions:
       cloudpermissionwhitelist.allowtempjoin: true
       cloudpermissionwhitelist.denytempjoin: true
       cloudpermissionwhitelist.listtempjoin: true
+      cloudpermissionwhitelist.updatenotify: true

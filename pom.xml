@@ -37,5 +37,10 @@
             <version>3.4.0-RELEASE</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>net.jandie1505</groupId>
+            <artifactId>githubreleasesupdatecheck</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
