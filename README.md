@@ -28,7 +28,7 @@ Users with the * permission usually also have permission to join all task's serv
 | updateCheck --> check | BOOLEAN | Check for updates |
 | updateCheck --> notifyConsole | BOOLEAN | Send a message to the console if a new update is available |
 | updateCheck --> notifyPlayer | BOOLEAN | Notify admins on join that a new update is available |
-| tempJoinTime | INT | The time (in seconds) a temporarily allowed player has time to join the server (Default: 300) |
+| tempJoinTime | INT | The time (in seconds) a temporarily allowed player has time to join the server (Default: 300, min: 1, max: 1800) |
 ## Version support for lower versions
 Officially, only 1.13 and higher is supported.
 If the plugin is needed for a lower Minecraft version, open the JAR archive with e.g. 7-zip and set the api-version item in the plugin.yml file to the desired version. However, this is not supported and errors may occur.
