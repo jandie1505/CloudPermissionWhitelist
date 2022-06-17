@@ -17,8 +17,8 @@ public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
             if(p.hasPermission("cloudpermissionwhitelist.denytempjoin")) {
                 if(args.length == 1) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
-                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                    if(CloudPermissionWhitelist.getPlugin().getTempAllowed().containsKey(target.getUniqueId())) {
+                        CloudPermissionWhitelist.getPlugin().getTempAllowed().remove(target.getUniqueId());
                         p.sendMessage("§a" + target.getName() + " can't join anymore");
                         CloudPermissionWhitelist.getPlugin().getLogger().info(target.getName() + " can't join anymore");
                     } else {
@@ -34,8 +34,8 @@ public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
             if(args.length == 1) {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
-                    CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                if(CloudPermissionWhitelist.getPlugin().getTempAllowed().containsKey(target.getUniqueId())) {
+                    CloudPermissionWhitelist.getPlugin().getTempAllowed().remove(target.getUniqueId());
                     console.sendMessage("§a" + target.getName() + " can't join anymore");
                     CloudPermissionWhitelist.getPlugin().getLogger().info(target.getName() + " can't join anymore");
                 } else {

@@ -9,22 +9,28 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class CloudPermissionWhitelist extends JavaPlugin {
     private static CloudPermissionWhitelist plugin;
-    private static String taskName;
-    private static HashMap<UUID, Integer> tempAllowed = new HashMap<UUID, Integer>();
-    private static ArrayList<UUID> tempAllowedPlayerArray = new ArrayList<UUID>();
+    private String taskName;
+    private Map<UUID, Integer> tempAllowed;
+    private List<UUID> tempAllowedPlayerArray;
     int mainTask;
     int consoleUpdateNotificationTask;
 
     @Override
-    public void onEnable(){
+    public void onLoad() {
         plugin = this;
+    }
+
+    @Override
+    public void onEnable() {
+        plugin = this;
+
+        this.tempAllowed = new HashMap<>();
+        this.tempAllowedPlayerArray = new ArrayList<>();
+
         taskName = Wrapper.getInstance().getServiceId().getTaskName();
         Config.load();
         this.getLogger().info("Task: " + taskName + "\n" +
@@ -40,13 +46,14 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         getCommand("denyalltempjoin").setTabCompleter(new CmdDenyAllTempJoin());
         getCommand("listtempjoin").setExecutor(new CmdListTempJoin());
         getCommand("listtempjoin").setTabCompleter(new CmdListTempJoin());
+
         mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
                 Set<UUID> keySet = tempAllowed.keySet();
                 tempAllowedPlayerArray = new ArrayList<>(keySet);
-                for(UUID playerid : tempAllowedPlayerArray){
-                    if(tempAllowed.get(playerid) > 0 && tempAllowed.containsKey(playerid)){
+                for(UUID playerid : tempAllowedPlayerArray) {
+                    if(tempAllowed.get(playerid) > 0 && tempAllowed.containsKey(playerid)) {
                         int time = tempAllowed.get(playerid);
                         time = time - 1;
                         tempAllowed.put(playerid, time);
@@ -57,6 +64,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 }
             }
         }, 0, 20);
+
         if(Config.getUpdateCheck()) {
             consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
@@ -73,23 +81,23 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         }
     }
 
-    public static boolean canPlayerJoin(Player player){
-        return tempAllowed.containsKey(player.getUniqueId()) && tempAllowed.get(player.getUniqueId()) > 0;
+    public boolean canPlayerJoin(Player player){
+        return this.tempAllowed.containsKey(player.getUniqueId()) && tempAllowed.get(player.getUniqueId()) > 0;
+    }
+
+    public Map<UUID, Integer> getTempAllowed(){
+        return this.tempAllowed;
+    }
+
+    public List<UUID> getTempAllowedPlayerArray(){
+        return this.tempAllowedPlayerArray;
+    }
+
+    public String getTaskName(){
+        return this.taskName;
     }
 
     public static CloudPermissionWhitelist getPlugin(){
         return plugin;
-    }
-
-    public static HashMap<UUID, Integer> getTempAllowed(){
-        return tempAllowed;
-    }
-
-    public static ArrayList<UUID> getTempAllowedPlayerArray(){
-        return tempAllowedPlayerArray;
-    }
-
-    public static String getTaskName(){
-        return taskName;
     }
 }

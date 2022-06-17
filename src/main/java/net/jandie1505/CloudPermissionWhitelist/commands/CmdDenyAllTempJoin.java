@@ -13,7 +13,7 @@ public class CmdDenyAllTempJoin implements CommandExecutor, TabCompleter {
         if(sender instanceof Player) {
             Player p = (Player) sender;
             if(args.length == 0) {
-                CloudPermissionWhitelist.getTempAllowed().clear();
+                CloudPermissionWhitelist.getPlugin().getTempAllowed().clear();
                 p.sendMessage("§aList of temp join players was cleared");
                 CloudPermissionWhitelist.getPlugin().getLogger().info("List of temp join players was cleared");
             } else {
@@ -22,7 +22,7 @@ public class CmdDenyAllTempJoin implements CommandExecutor, TabCompleter {
         } else if(sender instanceof ConsoleCommandSender) {
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
             if(args.length == 0) {
-                CloudPermissionWhitelist.getTempAllowed().clear();
+                CloudPermissionWhitelist.getPlugin().getTempAllowed().clear();
                 console.sendMessage("§aList of temp join players was cleared");
                 CloudPermissionWhitelist.getPlugin().getLogger().info("List of temp join players was cleared");
             } else {

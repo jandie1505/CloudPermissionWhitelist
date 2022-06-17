@@ -14,10 +14,10 @@ public class Events implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player target = event.getPlayer();
-        if(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) {
+        if(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getPlugin().getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) {
             CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login allowed for " + target.getName());
             event.allow();
-        } else if(CloudPermissionWhitelist.canPlayerJoin(target)) {
+        } else if(CloudPermissionWhitelist.getPlugin().canPlayerJoin(target)) {
             CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login temporary allowed for " + target.getName());
             event.allow();
         } else {
@@ -29,7 +29,7 @@ public class Events implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player target = event.getPlayer();
-        if(!(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) && CloudPermissionWhitelist.canPlayerJoin(target)) {
+        if(!(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getPlugin().getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) && CloudPermissionWhitelist.getPlugin().canPlayerJoin(target)) {
             target.sendMessage("§aYou could join this server because an admin gave you temporary access\nIf you disconnect, you might can't join anymore");
         }
         if(Config.getUpdateCheck() && Config.getUpdateNotifyPlayer() && UpdateChecker.isUpdateAvailable() && target.hasPermission("cloudpermissionwhitelist.updatenotify")) {

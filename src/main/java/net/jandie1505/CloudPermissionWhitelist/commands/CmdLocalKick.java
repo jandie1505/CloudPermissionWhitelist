@@ -27,8 +27,8 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
                 if(target != null) {
                     target.kickPlayer("You have been kicked from the server");
                     p.sendMessage("§aKicked " + target.getName());
-                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
-                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                    if(CloudPermissionWhitelist.getPlugin().getTempAllowed().containsKey(target.getUniqueId())) {
+                        CloudPermissionWhitelist.getPlugin().getTempAllowed().remove(target.getUniqueId());
                     }
                 }
             } else if(args.length == 2) {
@@ -36,8 +36,8 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
                 if(target != null) {
                     target.kickPlayer(args[1]);
                     p.sendMessage("§aKicked " + target.getName() + "§a for " + args[1]);
-                    if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
-                        CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                    if(CloudPermissionWhitelist.getPlugin().getTempAllowed().containsKey(target.getUniqueId())) {
+                        CloudPermissionWhitelist.getPlugin().getTempAllowed().remove(target.getUniqueId());
                     }
                 }
             } else {
@@ -54,8 +54,8 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
             if(target != null) {
                 target.kickPlayer("You have been kicked from the server");
                 console.sendMessage("§aKicked " + target.getName());
-                if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
-                    CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                if(CloudPermissionWhitelist.getPlugin().getTempAllowed().containsKey(target.getUniqueId())) {
+                    CloudPermissionWhitelist.getPlugin().getTempAllowed().remove(target.getUniqueId());
                 }
             }
         } if(args.length == 2) {
@@ -63,8 +63,8 @@ public class CmdLocalKick implements CommandExecutor, TabCompleter {
             if(target != null) {
                 target.kickPlayer(args[1]);
                 console.sendMessage("§aKicked " + target.getName() + "§a for " + args[1]);
-                if(CloudPermissionWhitelist.getTempAllowed().containsKey(target.getUniqueId())) {
-                    CloudPermissionWhitelist.getTempAllowed().remove(target.getUniqueId());
+                if(CloudPermissionWhitelist.getPlugin().getTempAllowed().containsKey(target.getUniqueId())) {
+                    CloudPermissionWhitelist.getPlugin().getTempAllowed().remove(target.getUniqueId());
 
                 }
             }
