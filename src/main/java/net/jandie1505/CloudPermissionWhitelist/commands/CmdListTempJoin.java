@@ -16,7 +16,7 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
             Player p = (Player) sender;
             if(args.length == 0) {
                 p.sendMessage("§aPlayers that can join:");
-                for(UUID playerid : CloudPermissionWhitelist.getPlugin().getTempAllowedPlayerArray()){
+                for(UUID playerid : CloudPermissionWhitelist.getPlugin().getTempAllowedPlayerList()){
                     p.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName() + " (" + CloudPermissionWhitelist.getPlugin().getTempAllowed().get(Bukkit.getOfflinePlayer(playerid).getUniqueId()) + ")");
                 }
             } else {
@@ -26,7 +26,7 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
             if(args.length == 0) {
                 console.sendMessage("§aPlayers that can join:");
-                for(UUID playerid : CloudPermissionWhitelist.getPlugin().getTempAllowedPlayerArray()){
+                for(UUID playerid : CloudPermissionWhitelist.getPlugin().getTempAllowedPlayerList()){
                     console.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName() + " (" + CloudPermissionWhitelist.getPlugin().getTempAllowed().get(Bukkit.getOfflinePlayer(playerid).getUniqueId()) + ")");
                 }
             } else {

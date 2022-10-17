@@ -15,7 +15,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     private static CloudPermissionWhitelist plugin;
     private String taskName;
     private Map<UUID, Integer> tempAllowed;
-    private List<UUID> tempAllowedPlayerArray;
+    private List<UUID> tempAllowedPlayerList;
     int mainTask;
     int consoleUpdateNotificationTask;
 
@@ -29,7 +29,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         plugin = this;
 
         this.tempAllowed = new HashMap<>();
-        this.tempAllowedPlayerArray = new ArrayList<>();
+        this.tempAllowedPlayerList = new ArrayList<>();
 
         taskName = Wrapper.getInstance().getServiceId().getTaskName();
         Config.load();
@@ -51,8 +51,8 @@ public class CloudPermissionWhitelist extends JavaPlugin {
             @Override
             public void run() {
                 Set<UUID> keySet = tempAllowed.keySet();
-                tempAllowedPlayerArray = new ArrayList<>(keySet);
-                for(UUID playerid : tempAllowedPlayerArray) {
+                tempAllowedPlayerList = new ArrayList<>(keySet);
+                for(UUID playerid : tempAllowedPlayerList) {
                     if(tempAllowed.get(playerid) > 0 && tempAllowed.containsKey(playerid)) {
                         int time = tempAllowed.get(playerid);
                         time = time - 1;
@@ -89,8 +89,8 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         return this.tempAllowed;
     }
 
-    public List<UUID> getTempAllowedPlayerArray(){
-        return this.tempAllowedPlayerArray;
+    public List<UUID> getTempAllowedPlayerList(){
+        return this.tempAllowedPlayerList;
     }
 
     public String getTaskName(){
