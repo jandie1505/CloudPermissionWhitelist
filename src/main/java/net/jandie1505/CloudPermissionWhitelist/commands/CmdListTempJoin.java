@@ -2,6 +2,7 @@ package net.jandie1505.CloudPermissionWhitelist.commands;
 
 import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
@@ -18,27 +19,29 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-        if(sender instanceof Player) {
-            Player p = (Player) sender;
-            if(args.length == 0) {
-                p.sendMessage("§aPlayers that can join:");
-                for(UUID playerid : this.cloudPermissionWhitelist.getTempAllowedPlayerList()){
-                    p.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName() + " (" + this.cloudPermissionWhitelist.getTempAllowed().get(Bukkit.getOfflinePlayer(playerid).getUniqueId()) + ")");
-                }
-            } else {
-                p.sendMessage("§cUse /listtempjoin");
-            }
-        } else if(sender instanceof ConsoleCommandSender) {
-            ConsoleCommandSender console = (ConsoleCommandSender) sender;
-            if(args.length == 0) {
-                console.sendMessage("§aPlayers that can join:");
-                for(UUID playerid : this.cloudPermissionWhitelist.getTempAllowedPlayerList()){
-                    console.sendMessage("§7" + Bukkit.getOfflinePlayer(playerid).getName() + " (" + this.cloudPermissionWhitelist.getTempAllowed().get(Bukkit.getOfflinePlayer(playerid).getUniqueId()) + ")");
-                }
-            } else {
-                console.sendMessage("§cUse /listtempjoin");
-            }
+        if (!(sender instanceof ConsoleCommandSender || sender instanceof Player)) {
+            return false;
         }
+
+        if (sender instanceof Player && !sender.hasPermission("cloudpermissionwhitelist.listtempjoin")) {
+            sender.sendMessage("§cYou don't have the permission to use this command");
+            return true;
+        }
+
+        if (args.length != 0) {
+            sender.sendMessage("§cUse /listtempjoin");
+            return true;
+        }
+
+        String message = "§aPlayers that can join:\n";
+        for (UUID playerId : this.cloudPermissionWhitelist.getTempAllowed().keySet()) {
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerId);
+            message = message + "§7" + offlinePlayer.getName() + " (" + playerId + ")\n";
+        }
+        message = message + "Allowed players: " + this.cloudPermissionWhitelist.getTempAllowed().size() + "\n";
+
+        sender.sendMessage(message);
+
         return true;
     }
 
