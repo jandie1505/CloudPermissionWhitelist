@@ -16,7 +16,6 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     private String taskName;
     private boolean protectionEnabled;
     private Map<UUID, Integer> tempAllowed;
-    private List<UUID> tempAllowedPlayerList;
     private Config config;
     private UpdateChecker updateChecker;
     int mainTask;
@@ -28,8 +27,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.updateChecker = new UpdateChecker(this);
 
         this.protectionEnabled = true;
-        this.tempAllowed = new HashMap<>();
-        this.tempAllowedPlayerList = new ArrayList<>();
+        this.tempAllowed = Collections.synchronizedMap(new HashMap<>());
 
         this.taskName = Wrapper.getInstance().getServiceId().getTaskName();
 
@@ -47,23 +45,22 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         getCommand("listtempjoin").setExecutor(new CmdListTempJoin(this));
         getCommand("listtempjoin").setTabCompleter(new CmdListTempJoin(this));
 
-        mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            Set<UUID> keySet = tempAllowed.keySet();
-            tempAllowedPlayerList = new ArrayList<>(keySet);
-            for(UUID playerid : tempAllowedPlayerList) {
-                if(tempAllowed.get(playerid) > 0 && tempAllowed.containsKey(playerid)) {
-                    int time = tempAllowed.get(playerid);
+        this.mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            Map<UUID, Integer> copyMap = new HashMap<>(this.tempAllowed);
+            for(UUID playerid : copyMap.keySet()) {
+                if(this.tempAllowed.containsKey(playerid) && this.tempAllowed.get(playerid) > 0) {
+                    int time = this.tempAllowed.get(playerid);
                     time = time - 1;
-                    tempAllowed.put(playerid, time);
+                    this.tempAllowed.put(playerid, time);
                 } else {
-                    tempAllowed.remove(playerid);
-                    this.getLogger().info("[CloudPermissionWhitelist] " + Bukkit.getPlayer(playerid).getName() + " can't join anymore");
+                    this.tempAllowed.remove(playerid);
+                    this.getLogger().info("[CloudPermissionWhitelist] Temporary join permission for " + playerid + " expired");
                 }
             }
         }, 0, 20);
 
         if(this.config.getUpdateCheck()) {
-            consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            this.consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
                 if(this.config.getUpdateCheck()) {
                     this.updateChecker.refreshUpdateStatus();
 
@@ -77,25 +74,45 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         instance = this;
     }
 
+    // CLOUDNET TASK
+
+    public String getTaskName() {
+        return this.taskName;
+    }
+
+    // PROTECTION STATUS
+
+    public boolean isProtectionEnabled() {
+        return this.protectionEnabled;
+    }
+
     public void setProtectionEnabled(boolean protectionEnabled) {
         this.protectionEnabled = protectionEnabled;
     }
 
-    public boolean canPlayerJoin(Player player){
+    // TEMP JOIN RELATED
+
+    public boolean isPlayerTempAllowed(Player player) {
         return this.tempAllowed.containsKey(player.getUniqueId()) && tempAllowed.get(player.getUniqueId()) > 0;
     }
 
-    public Map<UUID, Integer> getTempAllowed(){
-        return this.tempAllowed;
+    public Map<UUID, Integer> getTempAllowed() {
+        return Map.copyOf(this.tempAllowed);
     }
 
-    public List<UUID> getTempAllowedPlayerList(){
-        return this.tempAllowedPlayerList;
+    public void addTempAllowed(UUID playerId, int time) {
+        this.tempAllowed.put(playerId, time);
     }
 
-    public String getTaskName(){
-        return this.taskName;
+    public void removeTempAllowed(UUID playerId) {
+        this.tempAllowed.remove(playerId);
     }
+
+    public void clearTempAllowed() {
+        this.tempAllowed.clear();
+    }
+
+    // OBJECTS
 
     public Config getPluginConfig() {
         return this.config;
@@ -105,9 +122,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         return this.updateChecker;
     }
 
-    public boolean isProtectionEnabled() {
-        return this.protectionEnabled;
-    }
+    // STATIC
 
     public static CloudPermissionWhitelist getInstance() {
         return instance;
