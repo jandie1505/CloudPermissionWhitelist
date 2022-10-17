@@ -11,17 +11,23 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 public class Events implements Listener {
+    private final CloudPermissionWhitelist cloudPermissionWhitelist;
+
+    public Events(CloudPermissionWhitelist cloudPermissionWhitelist) {
+        this.cloudPermissionWhitelist = cloudPermissionWhitelist;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player target = event.getPlayer();
-        if(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getPlugin().getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) {
-            CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login allowed for " + target.getName());
+        if(target.hasPermission("cloudpermissionwhitelist.join." + this.cloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) {
+            this.cloudPermissionWhitelist.getLogger().info("[CloudPermissionWhitelist] Login allowed for " + target.getName());
             event.allow();
-        } else if(CloudPermissionWhitelist.getPlugin().canPlayerJoin(target)) {
-            CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login temporary allowed for " + target.getName());
+        } else if(this.cloudPermissionWhitelist.canPlayerJoin(target)) {
+            this.cloudPermissionWhitelist.getLogger().info("[CloudPermissionWhitelist] Login temporary allowed for " + target.getName());
             event.allow();
         } else {
-            CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] Login denied for " + target.getName());
+            this.cloudPermissionWhitelist.getLogger().info("[CloudPermissionWhitelist] Login denied for " + target.getName());
             event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "§cYou don't have the permission to join this server");
         }
     }
@@ -29,7 +35,7 @@ public class Events implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player target = event.getPlayer();
-        if(!(target.hasPermission("cloudpermissionwhitelist.join." + CloudPermissionWhitelist.getPlugin().getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) && CloudPermissionWhitelist.getPlugin().canPlayerJoin(target)) {
+        if(!(target.hasPermission("cloudpermissionwhitelist.join." + this.cloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) && this.cloudPermissionWhitelist.canPlayerJoin(target)) {
             target.sendMessage("§aYou could join this server because an admin gave you temporary access\nIf you disconnect, you might can't join anymore");
         }
         if(Config.getUpdateCheck() && Config.getUpdateNotifyPlayer() && UpdateChecker.isUpdateAvailable() && target.hasPermission("cloudpermissionwhitelist.updatenotify")) {

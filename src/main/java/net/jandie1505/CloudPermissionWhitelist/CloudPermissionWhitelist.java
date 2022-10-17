@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.*;
 
 public class CloudPermissionWhitelist extends JavaPlugin {
-    private static CloudPermissionWhitelist plugin;
+    private static CloudPermissionWhitelist instance;
     private String taskName;
     private Map<UUID, Integer> tempAllowed;
     private List<UUID> tempAllowedPlayerList;
@@ -21,12 +21,12 @@ public class CloudPermissionWhitelist extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        plugin = this;
+        instance = this;
     }
 
     @Override
     public void onEnable() {
-        plugin = this;
+        instance = this;
 
         this.tempAllowed = new HashMap<>();
         this.tempAllowedPlayerList = new ArrayList<>();
@@ -35,32 +35,29 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         Config.load();
         this.getLogger().info("Task: " + taskName + "\n" +
                 "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
-        Bukkit.getServer().getPluginManager().registerEvents(new Events(), this);
-        getCommand("localkick").setExecutor(new CmdLocalKick());
-        getCommand("localkick").setTabCompleter(new CmdLocalKick());
-        getCommand("allowtempjoin").setExecutor(new CmdAllowTempJoin());
-        getCommand("allowtempjoin").setTabCompleter(new CmdAllowTempJoin());
-        getCommand("denytempjoin").setExecutor(new CmdDenyTempJoin());
-        getCommand("denytempjoin").setTabCompleter(new CmdDenyTempJoin());
-        getCommand("denyalltempjoin").setExecutor(new CmdDenyAllTempJoin());
-        getCommand("denyalltempjoin").setTabCompleter(new CmdDenyAllTempJoin());
-        getCommand("listtempjoin").setExecutor(new CmdListTempJoin());
-        getCommand("listtempjoin").setTabCompleter(new CmdListTempJoin());
+        Bukkit.getServer().getPluginManager().registerEvents(new Events(this), this);
+        getCommand("localkick").setExecutor(new CmdLocalKick(this));
+        getCommand("localkick").setTabCompleter(new CmdLocalKick(this));
+        getCommand("allowtempjoin").setExecutor(new CmdAllowTempJoin(this));
+        getCommand("allowtempjoin").setTabCompleter(new CmdAllowTempJoin(this));
+        getCommand("denytempjoin").setExecutor(new CmdDenyTempJoin(this));
+        getCommand("denytempjoin").setTabCompleter(new CmdDenyTempJoin(this));
+        getCommand("denyalltempjoin").setExecutor(new CmdDenyAllTempJoin(this));
+        getCommand("denyalltempjoin").setTabCompleter(new CmdDenyAllTempJoin(this));
+        getCommand("listtempjoin").setExecutor(new CmdListTempJoin(this));
+        getCommand("listtempjoin").setTabCompleter(new CmdListTempJoin(this));
 
-        mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                Set<UUID> keySet = tempAllowed.keySet();
-                tempAllowedPlayerList = new ArrayList<>(keySet);
-                for(UUID playerid : tempAllowedPlayerList) {
-                    if(tempAllowed.get(playerid) > 0 && tempAllowed.containsKey(playerid)) {
-                        int time = tempAllowed.get(playerid);
-                        time = time - 1;
-                        tempAllowed.put(playerid, time);
-                    } else {
-                        tempAllowed.remove(playerid);
-                        CloudPermissionWhitelist.getPlugin().getLogger().info("[CloudPermissionWhitelist] " + Bukkit.getPlayer(playerid).getName() + " can't join anymore");
-                    }
+        mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            Set<UUID> keySet = tempAllowed.keySet();
+            tempAllowedPlayerList = new ArrayList<>(keySet);
+            for(UUID playerid : tempAllowedPlayerList) {
+                if(tempAllowed.get(playerid) > 0 && tempAllowed.containsKey(playerid)) {
+                    int time = tempAllowed.get(playerid);
+                    time = time - 1;
+                    tempAllowed.put(playerid, time);
+                } else {
+                    tempAllowed.remove(playerid);
+                    this.getLogger().info("[CloudPermissionWhitelist] " + Bukkit.getPlayer(playerid).getName() + " can't join anymore");
                 }
             }
         }, 0, 20);
@@ -97,7 +94,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         return this.taskName;
     }
 
-    public static CloudPermissionWhitelist getPlugin(){
-        return plugin;
+    public static CloudPermissionWhitelist getInstance() {
+        return instance;
     }
 }

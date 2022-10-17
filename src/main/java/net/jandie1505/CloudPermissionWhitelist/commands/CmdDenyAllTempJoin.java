@@ -8,23 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CmdDenyAllTempJoin implements CommandExecutor, TabCompleter {
+    private final CloudPermissionWhitelist cloudPermissionWhitelist;
+
+    public CmdDenyAllTempJoin(CloudPermissionWhitelist cloudPermissionWhitelist) {
+        this.cloudPermissionWhitelist = cloudPermissionWhitelist;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if(sender instanceof Player) {
             Player p = (Player) sender;
             if(args.length == 0) {
-                CloudPermissionWhitelist.getPlugin().getTempAllowed().clear();
+                this.cloudPermissionWhitelist.getTempAllowed().clear();
                 p.sendMessage("§aList of temp join players was cleared");
-                CloudPermissionWhitelist.getPlugin().getLogger().info("List of temp join players was cleared");
+                this.cloudPermissionWhitelist.getLogger().info("List of temp join players was cleared");
             } else {
                 p.sendMessage("§cUse /denyalltempjoin");
             }
         } else if(sender instanceof ConsoleCommandSender) {
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
             if(args.length == 0) {
-                CloudPermissionWhitelist.getPlugin().getTempAllowed().clear();
+                this.cloudPermissionWhitelist.getTempAllowed().clear();
                 console.sendMessage("§aList of temp join players was cleared");
-                CloudPermissionWhitelist.getPlugin().getLogger().info("List of temp join players was cleared");
+                this.cloudPermissionWhitelist.getLogger().info("List of temp join players was cleared");
             } else {
                 console.sendMessage("§cUse denyalltempjoin");
             }
