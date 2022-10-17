@@ -24,9 +24,9 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
             if(p.hasPermission("cloudpermissionwhitelist.allowtempjoin")) {
                 if(args.length == 1) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                    this.cloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), Config.getTempJoinTime());
-                    p.sendMessage("§a" + target.getName() + " can now join for " + Config.getTempJoinTime() + " seconds");
-                    this.cloudPermissionWhitelist.getLogger().info(target.getName() + " can now join for " + Config.getTempJoinTime() + " seconds");
+                    this.cloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime());
+                    p.sendMessage("§a" + target.getName() + " can now join for " + this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime() + " seconds");
+                    this.cloudPermissionWhitelist.getLogger().info(target.getName() + " can now join for " + this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime() + " seconds");
                 } else {
                     p.sendMessage("§cUse /allowtempjoin <Player>");
                 }
@@ -37,9 +37,9 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
             if(args.length == 1) {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                this.cloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), Config.getTempJoinTime());
-                console.sendMessage("§a" + target.getName() + " can now join for " + Config.getTempJoinTime() + " seconds");
-                this.cloudPermissionWhitelist.getLogger().info(target.getName() + " can now join for " + Config.getTempJoinTime() + " seconds");
+                this.cloudPermissionWhitelist.getTempAllowed().put(target.getUniqueId(), this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime());
+                console.sendMessage("§a" + target.getName() + " can now join for " + this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime() + " seconds");
+                this.cloudPermissionWhitelist.getLogger().info(target.getName() + " can now join for " + this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime() + " seconds");
             } else {
                 console.sendMessage("§cUse allowtempjoin <Player>");
             }

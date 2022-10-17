@@ -38,7 +38,7 @@ public class Events implements Listener {
         if(!(target.hasPermission("cloudpermissionwhitelist.join." + this.cloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) && this.cloudPermissionWhitelist.canPlayerJoin(target)) {
             target.sendMessage("§aYou could join this server because an admin gave you temporary access\nIf you disconnect, you might can't join anymore");
         }
-        if(Config.getUpdateCheck() && Config.getUpdateNotifyPlayer() && UpdateChecker.isUpdateAvailable() && target.hasPermission("cloudpermissionwhitelist.updatenotify")) {
+        if(this.cloudPermissionWhitelist.getPluginConfig().getUpdateCheck() && this.cloudPermissionWhitelist.getPluginConfig().getUpdateNotifyPlayer() && UpdateChecker.isUpdateAvailable() && target.hasPermission("cloudpermissionwhitelist.updatenotify")) {
             target.sendRawMessage("§bAn update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
         }
     }

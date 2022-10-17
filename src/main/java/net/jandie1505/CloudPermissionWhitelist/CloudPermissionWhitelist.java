@@ -16,6 +16,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     private String taskName;
     private Map<UUID, Integer> tempAllowed;
     private List<UUID> tempAllowedPlayerList;
+    private Config config;
     int mainTask;
     int consoleUpdateNotificationTask;
 
@@ -32,7 +33,9 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.tempAllowedPlayerList = new ArrayList<>();
 
         taskName = Wrapper.getInstance().getServiceId().getTaskName();
-        Config.load();
+
+        this.config = new Config(this);
+
         this.getLogger().info("Task: " + taskName + "\n" +
                 "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
         Bukkit.getServer().getPluginManager().registerEvents(new Events(this), this);
@@ -62,16 +65,13 @@ public class CloudPermissionWhitelist extends JavaPlugin {
             }
         }, 0, 20);
 
-        if(Config.getUpdateCheck()) {
-            consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-                @Override
-                public void run() {
-                    if(Config.getUpdateCheck()) {
-                        UpdateChecker.refreshUpdateStatus();
+        if(this.config.getUpdateCheck()) {
+            consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+                if(this.config.getUpdateCheck()) {
+                    UpdateChecker.refreshUpdateStatus();
 
-                        if(Config.getUpdateNotifyConsole() && UpdateChecker.isUpdateAvailable()) {
-                            Bukkit.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
-                        }
+                    if(this.config.getUpdateNotifyConsole() && UpdateChecker.isUpdateAvailable()) {
+                        Bukkit.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
                     }
                 }
             }, 0, 144000);
@@ -92,6 +92,10 @@ public class CloudPermissionWhitelist extends JavaPlugin {
 
     public String getTaskName(){
         return this.taskName;
+    }
+
+    public Config getPluginConfig() {
+        return this.config;
     }
 
     public static CloudPermissionWhitelist getInstance() {

@@ -9,67 +9,76 @@ import java.io.File;
 import java.io.IOException;
 
 public class Config {
-    private static File configFile;
-    private static FileConfiguration config;
+    private final CloudPermissionWhitelist cloudPermissionWhitelist;
 
-    private static boolean updateCheck = false;
-    private static boolean updateNotifyConsole = false;
-    private static boolean updateNotifyPlayer = false;
-    private static int tempJoinTime = 300;
+    public Config(CloudPermissionWhitelist cloudPermissionWhitelist) {
+        this.cloudPermissionWhitelist = cloudPermissionWhitelist;
+        this.updateCheck = false;
+        this.updateNotifyConsole = false;
+        this.updateNotifyPlayer = false;
+        this.tempJoinTime = 300;
+        this.load();
+    }
 
-    public static void load() {
+    private File configFile;
+    private FileConfiguration config;
+
+    private boolean updateCheck;
+    private boolean updateNotifyConsole;
+    private boolean updateNotifyPlayer;
+    private int tempJoinTime;
+
+    public void load() {
         try {
             createCustomConfig();
 
-            updateCheck = config.getBoolean("updateCheck.check");
-            updateNotifyConsole = config.getBoolean("updateCheck.notifyConsole");
-            updateNotifyPlayer = config.getBoolean("updateCheck.notifyPlayer");
+            this.updateCheck = this.config.getBoolean("updateCheck.check");
+            this.updateNotifyConsole = this.config.getBoolean("updateCheck.notifyConsole");
+            this.updateNotifyPlayer = this.config.getBoolean("updateCheck.notifyPlayer");
 
-            int tempJoinTimeCheck = tempJoinTime = config.getInt("tempJoinTime");
+            int tempJoinTimeCheck = config.getInt("tempJoinTime");
             if(tempJoinTimeCheck > 0 && tempJoinTimeCheck < 1800) {
-                tempJoinTime = tempJoinTimeCheck;
+                this.tempJoinTime = tempJoinTimeCheck;
             }
         } catch(Exception e) {
-            CloudPermissionWhitelist.getPlugin().getLogger().warning("Error with config, using internal default values");
+            this.cloudPermissionWhitelist.getLogger().warning("Error with config, using internal default values");
         }
     }
 
-    public static boolean getUpdateCheck() {
-        return updateCheck;
+    public boolean getUpdateCheck() {
+        return this.updateCheck;
     }
 
-    public static boolean getUpdateNotifyConsole() {
-        return updateNotifyConsole;
+    public boolean getUpdateNotifyConsole() {
+        return this.updateNotifyConsole;
     }
 
-    public static boolean getUpdateNotifyPlayer() {
-        return updateNotifyPlayer;
+    public boolean getUpdateNotifyPlayer() {
+        return this.updateNotifyPlayer;
     }
 
-    public static int getTempJoinTime() {
-        return tempJoinTime;
+    public int getTempJoinTime() {
+        return this.tempJoinTime;
     }
 
     // CONFIG FILE
     public FileConfiguration getCustomConfig() {
-        return config;
+        return this.config;
     }
 
-    private static void createCustomConfig() {
-        configFile = new File(CloudPermissionWhitelist.getPlugin().getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            configFile.getParentFile().mkdirs();
-            CloudPermissionWhitelist.getPlugin().saveResource("config.yml", false);
+    private void createCustomConfig() {
+        this.configFile = new File(this.cloudPermissionWhitelist.getDataFolder(), "config.yml");
+        if (!this.configFile.exists()) {
+            this.configFile.getParentFile().mkdirs();
+            this.cloudPermissionWhitelist.saveResource("config.yml", false);
         }
 
-        config = new YamlConfiguration();
+        this.config = new YamlConfiguration();
         try {
-            config.load(configFile);
+            this.config.load(this.configFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
-            CloudPermissionWhitelist.getPlugin().getLogger().warning("Configuration Error, using default values");
+            this.cloudPermissionWhitelist.getLogger().warning("Configuration Error, using default values");
         }
     }
-
-
 }
