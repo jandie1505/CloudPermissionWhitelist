@@ -14,6 +14,7 @@ import java.util.*;
 public class CloudPermissionWhitelist extends JavaPlugin {
     private static CloudPermissionWhitelist instance;
     private String taskName;
+    private boolean protectionEnabled;
     private Map<UUID, Integer> tempAllowed;
     private List<UUID> tempAllowedPlayerList;
     private Config config;
@@ -22,21 +23,15 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     int consoleUpdateNotificationTask;
 
     @Override
-    public void onLoad() {
-        instance = this;
-    }
-
-    @Override
     public void onEnable() {
-        instance = this;
+        this.config = new Config(this);
+        this.updateChecker = new UpdateChecker(this);
 
+        this.protectionEnabled = true;
         this.tempAllowed = new HashMap<>();
         this.tempAllowedPlayerList = new ArrayList<>();
 
-        taskName = Wrapper.getInstance().getServiceId().getTaskName();
-
-        this.config = new Config(this);
-        this.updateChecker = new UpdateChecker(this);
+        this.taskName = Wrapper.getInstance().getServiceId().getTaskName();
 
         this.getLogger().info("Task: " + taskName + "\n" +
                 "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
@@ -78,6 +73,12 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 }
             }, 0, 144000);
         }
+
+        instance = this;
+    }
+
+    public void setProtectionEnabled(boolean protectionEnabled) {
+        this.protectionEnabled = protectionEnabled;
     }
 
     public boolean canPlayerJoin(Player player){
@@ -98,6 +99,14 @@ public class CloudPermissionWhitelist extends JavaPlugin {
 
     public Config getPluginConfig() {
         return this.config;
+    }
+
+    public UpdateChecker getUpdateChecker() {
+        return this.updateChecker;
+    }
+
+    public boolean isProtectionEnabled() {
+        return this.protectionEnabled;
     }
 
     public static CloudPermissionWhitelist getInstance() {
