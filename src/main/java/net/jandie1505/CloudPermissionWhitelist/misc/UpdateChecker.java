@@ -4,13 +4,19 @@ import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
 import net.jandie1505.githubreleasesupdatecheck.GithubReleasesUpdateCheck;
 
 public class UpdateChecker {
-    private static boolean updateAvailable = false;
+    private final CloudPermissionWhitelist cloudPermissionWhitelist;
 
-    public static void refreshUpdateStatus() {
-        updateAvailable = GithubReleasesUpdateCheck.checkForUpdate("jandie1505", "CloudPermissionWhitelist", CloudPermissionWhitelist.getPlugin().getDescription().getVersion());
+    public UpdateChecker(CloudPermissionWhitelist cloudPermissionWhitelist) {
+        this.cloudPermissionWhitelist = cloudPermissionWhitelist;
     }
 
-    public static boolean isUpdateAvailable() {
-        return updateAvailable;
+    private boolean updateAvailable = false;
+
+    public void refreshUpdateStatus() {
+        updateAvailable = GithubReleasesUpdateCheck.checkForUpdate("jandie1505", "CloudPermissionWhitelist", this.cloudPermissionWhitelist.getDescription().getVersion());
+    }
+
+    public boolean isUpdateAvailable() {
+        return this.updateAvailable;
     }
 }
