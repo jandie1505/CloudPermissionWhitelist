@@ -102,6 +102,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
 
     public void addTempAllowed(UUID playerId, int time) {
         this.tempAllowed.put(playerId, time);
+        this.getLogger().info(playerId + " can now join for " + time + " seconds");
     }
 
     public void removeTempAllowed(UUID playerId) {
