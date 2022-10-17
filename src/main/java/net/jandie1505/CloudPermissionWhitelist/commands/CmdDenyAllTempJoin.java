@@ -16,25 +16,23 @@ public class CmdDenyAllTempJoin implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-        if(sender instanceof Player) {
-            Player p = (Player) sender;
-            if(args.length == 0) {
-                this.cloudPermissionWhitelist.getTempAllowed().clear();
-                p.sendMessage("§aList of temp join players was cleared");
-                this.cloudPermissionWhitelist.getLogger().info("List of temp join players was cleared");
-            } else {
-                p.sendMessage("§cUse /denyalltempjoin");
-            }
-        } else if(sender instanceof ConsoleCommandSender) {
-            ConsoleCommandSender console = (ConsoleCommandSender) sender;
-            if(args.length == 0) {
-                this.cloudPermissionWhitelist.getTempAllowed().clear();
-                console.sendMessage("§aList of temp join players was cleared");
-                this.cloudPermissionWhitelist.getLogger().info("List of temp join players was cleared");
-            } else {
-                console.sendMessage("§cUse denyalltempjoin");
-            }
+        if (!(sender instanceof ConsoleCommandSender || sender instanceof Player)) {
+            return false;
         }
+
+        if (sender instanceof Player && !sender.hasPermission("cloudpermissionwhitelist.denyalltempjoin")) {
+            sender.sendMessage("§cYou don't have the permission to use this command");
+            return true;
+        }
+
+        if (args.length != 0) {
+            sender.sendMessage("§cUse /denyalltempjoin");
+            return true;
+        }
+
+        this.cloudPermissionWhitelist.getTempAllowed().clear();
+        sender.sendMessage("§aList of temp join players was cleared");
+
         return true;
     }
     

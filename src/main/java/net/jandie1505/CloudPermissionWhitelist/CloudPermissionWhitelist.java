@@ -111,6 +111,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
 
     public void clearTempAllowed() {
         this.tempAllowed.clear();
+        this.getLogger().info("List of temp join players was cleared");
     }
 
     // OBJECTS
