@@ -30,7 +30,7 @@ public class CmdDenyAllTempJoin implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        this.cloudPermissionWhitelist.getTempAllowed().clear();
+        this.cloudPermissionWhitelist.clearTempAllowed();
         sender.sendMessage("§aList of temp join players was cleared");
 
         return true;
