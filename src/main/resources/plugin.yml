@@ -7,11 +7,11 @@ website: jandie1505.net
 commands:
   localkick:
     description: Kick a player (to lobby)
-    usage: /localkick <Player> <Reason>
+    usage: /localkick <Player> [Reason]
     permission: cloudpermissionwhitelist.localkick
   allowtempjoin:
     description: Allows a player to join temporary without the permission
-    usage: /allowtempjoin <Player>
+    usage: /allowtempjoin <Player> [Time]
     permission: cloudpermissionwhitelist.allowtempjoin
   denytempjoin:
     description: Removes a player from the temp join list
