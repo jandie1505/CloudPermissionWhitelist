@@ -25,6 +25,10 @@ commands:
     description: List temp join allowed players
     usage: /listtempjoin
     permission: cloudpermissionwhitelist.listtempjoin
+  joinprotection:
+    description: Manage the join protection
+    usage: /joinprotection <status/on/off> [time]
+    permission: cloudpermissionwhitelist.joinprotection
 
 permissions:
   cloudpermissionwhitelist.join.*:
@@ -45,6 +49,9 @@ permissions:
   cloudpermissionwhitelist.listtempjoin:
     default: op
     description: Allows to use the /listtempjoin command
+  cloudpermissionwhitelist.joinprotection:
+    default: op
+    description: Allows to use the /joinprotection command
   cloudpermissionwhitelist.updatenotify:
     default: op
     description: Receive update notifications when enabled
@@ -57,4 +64,5 @@ permissions:
       cloudpermissionwhitelist.allowtempjoin: true
       cloudpermissionwhitelist.denytempjoin: true
       cloudpermissionwhitelist.listtempjoin: true
+      cloudpermissionwhitelist.joinprotection: true
       cloudpermissionwhitelist.updatenotify: true

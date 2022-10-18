@@ -15,6 +15,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     private static CloudPermissionWhitelist instance;
     private String taskName;
     private boolean protectionEnabled;
+    private int protectionTime;
     private Map<UUID, Integer> tempAllowed;
     private Config config;
     private UpdateChecker updateChecker;
@@ -27,6 +28,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.updateChecker = new UpdateChecker(this);
 
         this.protectionEnabled = true;
+        this.protectionTime = -1;
         this.tempAllowed = Collections.synchronizedMap(new HashMap<>());
 
         this.taskName = Wrapper.getInstance().getServiceId().getTaskName();
@@ -34,16 +36,18 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.getLogger().info("Task: " + taskName + "\n" +
                 "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
         Bukkit.getServer().getPluginManager().registerEvents(new Events(this), this);
-        getCommand("localkick").setExecutor(new CmdLocalKick(this));
-        getCommand("localkick").setTabCompleter(new CmdLocalKick(this));
-        getCommand("allowtempjoin").setExecutor(new CmdAllowTempJoin(this));
-        getCommand("allowtempjoin").setTabCompleter(new CmdAllowTempJoin(this));
-        getCommand("denytempjoin").setExecutor(new CmdDenyTempJoin(this));
-        getCommand("denytempjoin").setTabCompleter(new CmdDenyTempJoin(this));
-        getCommand("denyalltempjoin").setExecutor(new CmdDenyAllTempJoin(this));
-        getCommand("denyalltempjoin").setTabCompleter(new CmdDenyAllTempJoin(this));
-        getCommand("listtempjoin").setExecutor(new CmdListTempJoin(this));
-        getCommand("listtempjoin").setTabCompleter(new CmdListTempJoin(this));
+        this.getCommand("localkick").setExecutor(new CmdLocalKick(this));
+        this.getCommand("localkick").setTabCompleter(new CmdLocalKick(this));
+        this.getCommand("allowtempjoin").setExecutor(new CmdAllowTempJoin(this));
+        this.getCommand("allowtempjoin").setTabCompleter(new CmdAllowTempJoin(this));
+        this.getCommand("denytempjoin").setExecutor(new CmdDenyTempJoin(this));
+        this.getCommand("denytempjoin").setTabCompleter(new CmdDenyTempJoin(this));
+        this.getCommand("denyalltempjoin").setExecutor(new CmdDenyAllTempJoin(this));
+        this.getCommand("denyalltempjoin").setTabCompleter(new CmdDenyAllTempJoin(this));
+        this.getCommand("listtempjoin").setExecutor(new CmdListTempJoin(this));
+        this.getCommand("listtempjoin").setTabCompleter(new CmdListTempJoin(this));
+        this.getCommand("joinprotection").setExecutor(new CmdJoinProtection(this));
+        this.getCommand("joinprotection").setTabCompleter(new CmdJoinProtection(this));
 
         this.mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Map<UUID, Integer> copyMap = new HashMap<>(this.tempAllowed);
@@ -56,6 +60,13 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                     this.tempAllowed.remove(playerid);
                     this.getLogger().info("[CloudPermissionWhitelist] Temporary join permission for " + playerid + " expired");
                 }
+            }
+
+            if (this.protectionTime > 1) {
+                this.protectionTime = this.protectionTime - 1;
+            } else if (this.protectionTime == 0) {
+                this.protectionTime = -1;
+                this.protectionEnabled = !this.protectionEnabled;
             }
         }, 0, 20);
 
@@ -86,7 +97,17 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         return this.protectionEnabled;
     }
 
+    public int getProtectionTime() {
+        return this.protectionTime;
+    }
+
     public void setProtectionEnabled(boolean protectionEnabled) {
+        this.protectionTime = -1;
+        this.protectionEnabled = protectionEnabled;
+    }
+
+    public void setProtectionEnabled(boolean protectionEnabled, int time) {
+        this.protectionTime = time;
         this.protectionEnabled = protectionEnabled;
     }
 
