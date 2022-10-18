@@ -30,33 +30,39 @@ public class CmdJoinProtection implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        boolean status;
-
         if (args[0].equalsIgnoreCase("status")) {
-            String statusString;
-            String time = "";
-
-            if (this.cloudPermissionWhitelist.isProtectionEnabled()) {
-                statusString = "§aenabled";
-            } else {
-                statusString = "§cdisabled";
-            }
-
-            if (this.cloudPermissionWhitelist.getProtectionTime() >= 0) {
-                time = " (status change in " + this.cloudPermissionWhitelist.getProtectionTime() + " seconds)";
-            }
-
-            sender.sendMessage("§7Current join protection status: " + statusString + time);
+            this.getStatusCommand(sender, cmd, s, args);
             return true;
         } else if (args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("true") || args[0].equalsIgnoreCase("enable")) {
-            status = true;
+            this.setStatusCommand(sender, cmd, s, args, true);
+            return true;
         } else if (args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("false") || args[0].equalsIgnoreCase("disable")) {
-            status = false;
+            this.setStatusCommand(sender, cmd, s, args, false);
+            return true;
         } else {
             sender.sendMessage("§cPlease enter status/on/off");
             return true;
         }
+    }
 
+    private void getStatusCommand(CommandSender sender, Command cmd, String s, String[] args) {
+        String statusString;
+        String time = "";
+
+        if (this.cloudPermissionWhitelist.isProtectionEnabled()) {
+            statusString = "§aenabled";
+        } else {
+            statusString = "§cdisabled";
+        }
+
+        if (this.cloudPermissionWhitelist.getProtectionTime() >= 0) {
+            time = " (status change in " + this.cloudPermissionWhitelist.getProtectionTime() + " seconds)";
+        }
+
+        sender.sendMessage("§7Current join protection status: " + statusString + time);
+    }
+
+    private void setStatusCommand(CommandSender sender, Command cmd, String s, String[] args, boolean status) {
         String timeString = "";
 
         if (args.length == 2) {
@@ -65,7 +71,7 @@ public class CmdJoinProtection implements CommandExecutor, TabCompleter {
                 timeString = " for " + args[1] + " seconds";
             } catch (NumberFormatException e) {
                 sender.sendMessage("§cPlease enter a valid time in seconds");
-                return true;
+                return;
             }
         } else {
             this.cloudPermissionWhitelist.setProtectionEnabled(status);
@@ -76,8 +82,6 @@ public class CmdJoinProtection implements CommandExecutor, TabCompleter {
         } else {
             sender.sendMessage("§aJoin protection was disabled" + timeString);
         }
-
-        return true;
     }
 
     @Override
