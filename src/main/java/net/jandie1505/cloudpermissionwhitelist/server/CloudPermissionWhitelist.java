@@ -62,11 +62,12 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 }
             }
 
-            if (this.protectionTime > 1) {
+            if (this.protectionTime > 0) {
                 this.protectionTime = this.protectionTime - 1;
             } else if (this.protectionTime == 0) {
                 this.protectionTime = -1;
                 this.protectionEnabled = !this.protectionEnabled;
+                this.getLogger().info("Updated join protection status (time): " + this.protectionEnabled);
             }
         }, 0, 20);
 
@@ -108,11 +109,13 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     public void setProtectionEnabled(boolean protectionEnabled) {
         this.protectionTime = -1;
         this.protectionEnabled = protectionEnabled;
+        this.getLogger().info("Updated join protection status: " + this.protectionEnabled);
     }
 
     public void setProtectionEnabled(boolean protectionEnabled, int time) {
         this.protectionTime = time;
         this.protectionEnabled = protectionEnabled;
+        this.getLogger().info("Updated join protection status (time): " + this.protectionEnabled + " (for " + time + "s)");
     }
 
     // TEMP JOIN RELATED

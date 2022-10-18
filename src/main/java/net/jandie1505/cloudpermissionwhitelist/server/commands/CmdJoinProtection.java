@@ -59,7 +59,7 @@ public class CmdJoinProtection implements CommandExecutor, TabCompleter {
             time = " (status change in " + this.cloudPermissionWhitelist.getProtectionTime() + " seconds)";
         }
 
-        sender.sendMessage("§7Current join protection status: " + statusString + time);
+        sender.sendMessage("§7Current join protection status: " + statusString + "§7" + time);
     }
 
     private void setStatusCommand(CommandSender sender, Command cmd, String s, String[] args, boolean status) {
