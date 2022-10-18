@@ -19,7 +19,7 @@ public class Events implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         if (this.cloudPermissionWhitelist.isProtectionEnabled()) {
             Player target = event.getPlayer();
-            if(target.hasPermission("cloudpermissionwhitelist.join." + this.cloudPermissionWhitelist.getTaskName()) || target.hasPermission("cloudpermissionwhitelist.join.*") || target.hasPermission("cloudpermissionwhitelist.*")) {
+            if(this.cloudPermissionWhitelist.hasPlayerJoinPermission(target)) {
                 this.cloudPermissionWhitelist.getLogger().info("Login allowed for " + target.getName());
                 event.allow();
             } else if(this.cloudPermissionWhitelist.isPlayerTempAllowed(target)) {

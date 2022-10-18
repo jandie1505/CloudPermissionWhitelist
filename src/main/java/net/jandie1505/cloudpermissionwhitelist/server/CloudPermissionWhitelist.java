@@ -73,6 +73,15 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 this.protectionEnabled = !this.protectionEnabled;
                 this.getLogger().info("Updated join protection status (time): " + this.protectionEnabled);
             }
+
+            if (this.config.getEnforceWhitelist()) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (!this.canPlayerJoin(player)) {
+                        this.getLogger().info("Enforce whitelist: Kicked player " + player.getName() + " (" + player.getUniqueId() + ")");
+                        player.kickPlayer("You are not allowed to be on this server");
+                    }
+                }
+            }
         }, 0, 20);
 
         if(this.config.getUpdateCheck()) {
@@ -156,6 +165,16 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     public void clearTempAllowed() {
         this.tempAllowed.clear();
         this.getLogger().info("List of temp join players was cleared");
+    }
+
+    // PLAYER
+
+    public boolean hasPlayerJoinPermission(Player player) {
+        return player.hasPermission("cloudpermissionwhitelist.join." + this.getTaskName()) || player.hasPermission("cloudpermissionwhitelist.join.*") || player.hasPermission("cloudpermissionwhitelist.*");
+    }
+
+    public boolean canPlayerJoin(Player player) {
+        return this.hasPlayerJoinPermission(player) || this.isPlayerTempAllowed(player);
     }
 
     // OBJECTS

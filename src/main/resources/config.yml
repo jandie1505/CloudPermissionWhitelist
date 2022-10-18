@@ -15,5 +15,8 @@ tempJoinTime: 300
 # set if the vanilla whitelist should be disabled when the plugin is enabled
 autoDisableWhitelist: true
 
+# if enabled, CloudPermissionWhitelist will check if players that are already on the server have the join permission and kick them if they don't
+enforceWhitelist: false
+
 # send a JSON String which contains a random UUID (will change every time) to huddu.io to report usage statistics
 statsTracking: true

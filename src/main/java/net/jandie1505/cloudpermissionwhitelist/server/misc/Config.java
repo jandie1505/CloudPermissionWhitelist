@@ -20,6 +20,7 @@ public class Config {
     private boolean statsTracking;
     private int tempJoinTime;
     private boolean autoDisableWhitelist;
+    private boolean enforceWhitelist;
 
     public Config(CloudPermissionWhitelist cloudPermissionWhitelist) {
         this.cloudPermissionWhitelist = cloudPermissionWhitelist;
@@ -30,6 +31,7 @@ public class Config {
         this.statsTracking = false;
         this.tempJoinTime = 300;
         this.autoDisableWhitelist = true;
+        this.enforceWhitelist = false;
 
         this.load();
     }
@@ -43,6 +45,7 @@ public class Config {
             this.updateNotifyPlayer = this.config.getBoolean("updateCheck.notifyPlayer");
             this.statsTracking = this.config.getBoolean("statsTracking");
             this.autoDisableWhitelist = this.config.getBoolean("autoDisableWhitelist");
+            this.enforceWhitelist = this.config.getBoolean("enforceWhitelist");
 
             int tempJoinTimeCheck = config.getInt("tempJoinTime");
             if(tempJoinTimeCheck > 0 && tempJoinTimeCheck < 1800) {
@@ -76,6 +79,10 @@ public class Config {
 
     public boolean getStatsTracking() {
         return this.statsTracking;
+    }
+
+    public boolean getEnforceWhitelist() {
+        return this.enforceWhitelist;
     }
 
     // CONFIG FILE
