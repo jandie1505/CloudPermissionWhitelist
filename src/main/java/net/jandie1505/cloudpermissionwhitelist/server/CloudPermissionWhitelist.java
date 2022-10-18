@@ -52,6 +52,8 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.getCommand("joinprotection").setTabCompleter(new CmdJoinProtection(this));
 
         this.mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+
+            // Temp allowed players time
             Map<UUID, Integer> copyMap = new HashMap<>(this.tempAllowed);
             for(UUID playerid : copyMap.keySet()) {
                 if (this.tempAllowed.containsKey(playerid)) {
@@ -66,6 +68,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 }
             }
 
+            // Protection
             if (this.protectionTime > 0) {
                 this.protectionTime = this.protectionTime - 1;
             } else if (this.protectionTime == 0) {
@@ -74,6 +77,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                 this.getLogger().info("Updated join protection status (time): " + this.protectionEnabled);
             }
 
+            // Enforce whitelist
             if (this.config.getEnforceWhitelist()) {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (!this.canPlayerJoin(player)) {
