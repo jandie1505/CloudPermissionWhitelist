@@ -103,7 +103,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
             }
 
             // Enforce whitelist
-            if (this.config.getEnforceWhitelist()) {
+            if (this.config.getEnforceWhitelist() && this.protectionEnabled) {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (!this.canPlayerJoin(player)) {
                         this.getLogger().info("Enforce whitelist: Kicked player " + player.getName() + " (" + player.getUniqueId() + ")");
