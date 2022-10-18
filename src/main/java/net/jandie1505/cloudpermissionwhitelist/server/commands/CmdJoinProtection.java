@@ -67,6 +67,11 @@ public class CmdJoinProtection implements CommandExecutor, TabCompleter {
 
         if (args.length == 2) {
             try {
+                if (Integer.parseInt(args[1]) < 0) {
+                    sender.sendMessage("§cThe time cannot be negative");
+                    return;
+                }
+
                 this.cloudPermissionWhitelist.setProtectionEnabled(status, Integer.parseInt(args[1]));
                 timeString = " for " + args[1] + " seconds";
             } catch (NumberFormatException e) {

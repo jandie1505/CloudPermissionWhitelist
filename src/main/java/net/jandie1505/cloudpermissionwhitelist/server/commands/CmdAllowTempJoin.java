@@ -48,7 +48,16 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
 
         if (args.length == 2) {
             try {
-                tempJoinTime = Integer.parseInt(args[1]);
+                if (args[1].equalsIgnoreCase("p") || args[1].equalsIgnoreCase("permanent")) {
+                    tempJoinTime = -1;
+                } else {
+                    if (Integer.parseInt(args[1]) < 0) {
+                        sender.sendMessage("§cThe time cannot be negative");
+                        return true;
+                    }
+
+                    tempJoinTime = Integer.parseInt(args[1]);
+                }
             } catch (NumberFormatException e) {
                 sender.sendMessage("§cPlease enter a valid time in seconds");
                 return true;
@@ -56,7 +65,12 @@ public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
         }
 
         this.cloudPermissionWhitelist.addTempAllowed(targetUUID, tempJoinTime);
-        sender.sendMessage("§a" + targetName + " can now join for " + tempJoinTime + " seconds");
+
+        if (tempJoinTime < 0) {
+            sender.sendMessage("§a" + targetName + " can now join as long as the server runs");
+        } else {
+            sender.sendMessage("§a" + targetName + " can now join for " + tempJoinTime + " seconds");
+        }
 
         return true;
     }

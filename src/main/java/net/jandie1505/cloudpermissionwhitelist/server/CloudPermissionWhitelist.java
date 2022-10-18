@@ -54,13 +54,15 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Map<UUID, Integer> copyMap = new HashMap<>(this.tempAllowed);
             for(UUID playerid : copyMap.keySet()) {
-                if(this.tempAllowed.containsKey(playerid) && this.tempAllowed.get(playerid) > 0) {
-                    int time = this.tempAllowed.get(playerid);
-                    time = time - 1;
-                    this.tempAllowed.put(playerid, time);
-                } else {
-                    this.tempAllowed.remove(playerid);
-                    this.getLogger().info("Temporary join permission for " + playerid + " expired");
+                if (this.tempAllowed.containsKey(playerid)) {
+                    if(this.tempAllowed.get(playerid) > 0) {
+                        int time = this.tempAllowed.get(playerid);
+                        time = time - 1;
+                        this.tempAllowed.put(playerid, time);
+                    } else if (this.tempAllowed.get(playerid) == 0) {
+                        this.tempAllowed.remove(playerid);
+                        this.getLogger().info("Temporary join permission for " + playerid + " expired");
+                    }
                 }
             }
 
@@ -134,7 +136,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     // TEMP JOIN RELATED
 
     public boolean isPlayerTempAllowed(Player player) {
-        return this.tempAllowed.containsKey(player.getUniqueId()) && tempAllowed.get(player.getUniqueId()) > 0;
+        return this.tempAllowed.containsKey(player.getUniqueId());
     }
 
     public Map<UUID, Integer> getTempAllowed() {
