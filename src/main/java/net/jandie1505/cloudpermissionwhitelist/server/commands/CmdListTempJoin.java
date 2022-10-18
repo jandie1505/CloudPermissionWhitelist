@@ -33,10 +33,10 @@ public class CmdListTempJoin implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        String message = "§aPlayers that can join:\n";
+        String message = "§aPlayers that can join:§7\n";
         for (UUID playerId : this.cloudPermissionWhitelist.getTempAllowed().keySet()) {
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerId);
-            message = message + "§7" + offlinePlayer.getName() + " (" + playerId + ")\n";
+            message = message + "§7" + offlinePlayer.getName() + " (" + playerId + "), " + this.cloudPermissionWhitelist.getTempAllowed().get(playerId) + "\n";
         }
         message = message + "Allowed players: " + this.cloudPermissionWhitelist.getTempAllowed().size() + "\n";
 
