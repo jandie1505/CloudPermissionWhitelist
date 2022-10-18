@@ -33,8 +33,8 @@ public class CloudPermissionWhitelist extends JavaPlugin {
 
         this.taskName = Wrapper.getInstance().getServiceId().getTaskName();
 
-        this.getLogger().info("Task: " + taskName + "\n" +
-                "[CloudPermissionWhitelist] Join Permission: cloudpermissionwhitelist.join." + taskName);
+        this.getLogger().info("Task: " + taskName);
+        this.getLogger().info("Join Permission: cloudpermissionwhitelist.join." + taskName);
         Bukkit.getServer().getPluginManager().registerEvents(new Events(this), this);
         this.getCommand("localkick").setExecutor(new CmdLocalKick(this));
         this.getCommand("localkick").setTabCompleter(new CmdLocalKick(this));
@@ -58,7 +58,7 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                     this.tempAllowed.put(playerid, time);
                 } else {
                     this.tempAllowed.remove(playerid);
-                    this.getLogger().info("[CloudPermissionWhitelist] Temporary join permission for " + playerid + " expired");
+                    this.getLogger().info("Temporary join permission for " + playerid + " expired");
                 }
             }
 
