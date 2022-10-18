@@ -76,10 +76,14 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                     this.updateChecker.refreshUpdateStatus();
 
                     if(this.config.getUpdateNotifyConsole() && this.updateChecker.isUpdateAvailable()) {
-                        Bukkit.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
+                        this.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
                     }
                 }
             }, 0, 144000);
+        }
+
+        if (this.config.getAutoDisableWhitelist()) {
+            Bukkit.setWhitelist(false);
         }
 
         instance = this;
