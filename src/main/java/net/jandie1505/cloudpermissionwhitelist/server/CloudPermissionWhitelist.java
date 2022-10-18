@@ -1,10 +1,10 @@
-package net.jandie1505.CloudPermissionWhitelist;
+package net.jandie1505.cloudpermissionwhitelist.server;
 
 import de.dytanic.cloudnet.wrapper.Wrapper;
-import net.jandie1505.CloudPermissionWhitelist.commands.*;
-import net.jandie1505.CloudPermissionWhitelist.misc.Config;
-import net.jandie1505.CloudPermissionWhitelist.events.Events;
-import net.jandie1505.CloudPermissionWhitelist.misc.UpdateChecker;
+import net.jandie1505.cloudpermissionwhitelist.server.commands.*;
+import net.jandie1505.cloudpermissionwhitelist.server.misc.Config;
+import net.jandie1505.cloudpermissionwhitelist.server.events.Events;
+import net.jandie1505.cloudpermissionwhitelist.server.misc.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

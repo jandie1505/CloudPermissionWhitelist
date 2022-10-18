@@ -1,6 +1,6 @@
-package net.jandie1505.CloudPermissionWhitelist.commands;
+package net.jandie1505.cloudpermissionwhitelist.server.commands;
 
-import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
+import net.jandie1505.cloudpermissionwhitelist.server.CloudPermissionWhitelist;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
+public class CmdAllowTempJoin implements CommandExecutor, TabCompleter {
     private final CloudPermissionWhitelist cloudPermissionWhitelist;
 
-    public CmdDenyTempJoin(CloudPermissionWhitelist cloudPermissionWhitelist) {
+    public CmdAllowTempJoin(CloudPermissionWhitelist cloudPermissionWhitelist) {
         this.cloudPermissionWhitelist = cloudPermissionWhitelist;
     }
 
@@ -23,18 +23,19 @@ public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (sender instanceof Player && !sender.hasPermission("cloudpermissionwhitelist.denytempjoin")) {
+        if (sender instanceof Player && !sender.hasPermission("cloudpermissionwhitelist.allowtempjoin")) {
             sender.sendMessage("§cYou don't have the permission to use this command");
             return true;
         }
 
-        if (args.length != 1) {
-            sender.sendMessage("§cUse /denytempjoin <Player>");
+        if (args.length < 1 || args.length > 2) {
+            sender.sendMessage("§cUse /allowtempjoin <Player> [Time]");
             return true;
         }
 
         UUID targetUUID;
         String targetName;
+        int tempJoinTime = this.cloudPermissionWhitelist.getPluginConfig().getTempJoinTime();
 
         try {
             targetUUID = UUID.fromString(args[0]);
@@ -45,8 +46,17 @@ public class CmdDenyTempJoin implements CommandExecutor, TabCompleter {
             targetName = target.getName();
         }
 
-        this.cloudPermissionWhitelist.removeTempAllowed(targetUUID);
-        sender.sendMessage("§a" + targetName + " can't join anymore");
+        if (args.length == 2) {
+            try {
+                tempJoinTime = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                sender.sendMessage("§cPlease enter a valid time in seconds");
+                return true;
+            }
+        }
+
+        this.cloudPermissionWhitelist.addTempAllowed(targetUUID, tempJoinTime);
+        sender.sendMessage("§a" + targetName + " can now join for " + tempJoinTime + " seconds");
 
         return true;
     }

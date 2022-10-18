@@ -1,13 +1,11 @@
-package net.jandie1505.CloudPermissionWhitelist.commands;
+package net.jandie1505.cloudpermissionwhitelist.server.commands;
 
-import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
-import org.bukkit.Bukkit;
+import net.jandie1505.cloudpermissionwhitelist.server.CloudPermissionWhitelist;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class CmdJoinProtection implements CommandExecutor, TabCompleter {
     private final CloudPermissionWhitelist cloudPermissionWhitelist;

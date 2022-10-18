@@ -1,8 +1,6 @@
-package net.jandie1505.CloudPermissionWhitelist.events;
+package net.jandie1505.cloudpermissionwhitelist.server.events;
 
-import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
-import net.jandie1505.CloudPermissionWhitelist.misc.Config;
-import net.jandie1505.CloudPermissionWhitelist.misc.UpdateChecker;
+import net.jandie1505.cloudpermissionwhitelist.server.CloudPermissionWhitelist;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

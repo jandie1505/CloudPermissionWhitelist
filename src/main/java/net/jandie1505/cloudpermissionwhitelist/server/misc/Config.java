@@ -1,6 +1,6 @@
-package net.jandie1505.CloudPermissionWhitelist.misc;
+package net.jandie1505.cloudpermissionwhitelist.server.misc;
 
-import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
+import net.jandie1505.cloudpermissionwhitelist.server.CloudPermissionWhitelist;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

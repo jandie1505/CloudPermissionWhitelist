@@ -1,6 +1,6 @@
-package net.jandie1505.CloudPermissionWhitelist.commands;
+package net.jandie1505.cloudpermissionwhitelist.server.commands;
 
-import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
+import net.jandie1505.cloudpermissionwhitelist.server.CloudPermissionWhitelist;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 

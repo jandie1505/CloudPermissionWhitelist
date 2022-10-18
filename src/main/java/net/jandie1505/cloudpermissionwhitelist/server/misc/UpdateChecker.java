@@ -1,6 +1,6 @@
-package net.jandie1505.CloudPermissionWhitelist.misc;
+package net.jandie1505.cloudpermissionwhitelist.server.misc;
 
-import net.jandie1505.CloudPermissionWhitelist.CloudPermissionWhitelist;
+import net.jandie1505.cloudpermissionwhitelist.server.CloudPermissionWhitelist;
 import net.jandie1505.githubreleasesupdatecheck.GithubReleasesUpdateCheck;
 
 public class UpdateChecker {
