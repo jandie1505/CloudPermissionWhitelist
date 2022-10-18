@@ -36,7 +36,7 @@ permissions:
     description: Allow the join on ALL servers
   cloudpermissionwhitelist.join.<TaskName>:
     default: false
-    description: Allow the join on <TaskName>
+    description: Allow the join on <TaskName>'s services
   cloudpermissionwhitelist.localkick:
     default: op
     description: Allows to use the /localkick command
