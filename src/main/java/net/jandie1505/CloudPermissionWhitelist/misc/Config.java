@@ -13,10 +13,13 @@ public class Config {
 
     public Config(CloudPermissionWhitelist cloudPermissionWhitelist) {
         this.cloudPermissionWhitelist = cloudPermissionWhitelist;
+
         this.updateCheck = false;
         this.updateNotifyConsole = false;
         this.updateNotifyPlayer = false;
         this.tempJoinTime = 300;
+        this.autoDisableWhitelist = true;
+
         this.load();
     }
 
@@ -27,14 +30,16 @@ public class Config {
     private boolean updateNotifyConsole;
     private boolean updateNotifyPlayer;
     private int tempJoinTime;
+    private boolean autoDisableWhitelist;
 
     public void load() {
         try {
-            createCustomConfig();
+            this.createCustomConfig(false);
 
             this.updateCheck = this.config.getBoolean("updateCheck.check");
             this.updateNotifyConsole = this.config.getBoolean("updateCheck.notifyConsole");
             this.updateNotifyPlayer = this.config.getBoolean("updateCheck.notifyPlayer");
+            this.autoDisableWhitelist = this.config.getBoolean("autoDisableWhitelist");
 
             int tempJoinTimeCheck = config.getInt("tempJoinTime");
             if(tempJoinTimeCheck > 0 && tempJoinTimeCheck < 1800) {
@@ -42,6 +47,7 @@ public class Config {
             }
         } catch(Exception e) {
             this.cloudPermissionWhitelist.getLogger().warning("Error with config, using internal default values");
+            this.createCustomConfig(true);
         }
     }
 
@@ -61,16 +67,20 @@ public class Config {
         return this.tempJoinTime;
     }
 
+    public boolean getAutoDisableWhitelist() {
+        return this.autoDisableWhitelist;
+    }
+
     // CONFIG FILE
     public FileConfiguration getCustomConfig() {
         return this.config;
     }
 
-    private void createCustomConfig() {
+    private void createCustomConfig(boolean override) {
         this.configFile = new File(this.cloudPermissionWhitelist.getDataFolder(), "config.yml");
-        if (!this.configFile.exists()) {
+        if (!this.configFile.exists() || override) {
             this.configFile.getParentFile().mkdirs();
-            this.cloudPermissionWhitelist.saveResource("config.yml", false);
+            this.cloudPermissionWhitelist.saveResource("config.yml", override);
         }
 
         this.config = new YamlConfiguration();

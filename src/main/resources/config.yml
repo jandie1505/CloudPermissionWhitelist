@@ -1,6 +1,16 @@
-# Configuration file of CloudPermissionWhitelist
+#################################
+#     Configuration file of     #
+# CloudPermissionWhitelist v4.0 #
+#################################
+
+# change update check settings
 updateCheck:
   check: true
   notifyConsole: true
   notifyPlayer: true
+
+# default /allowtempjoin time
 tempJoinTime: 300
+
+# set if the vanilla whitelist should be disabled when the plugin is enabled
+autoDisableWhitelist: true
