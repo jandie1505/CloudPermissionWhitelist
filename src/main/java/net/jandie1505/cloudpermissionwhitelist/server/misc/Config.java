@@ -11,26 +11,28 @@ import java.io.IOException;
 public class Config {
     private final CloudPermissionWhitelist cloudPermissionWhitelist;
 
-    public Config(CloudPermissionWhitelist cloudPermissionWhitelist) {
-        this.cloudPermissionWhitelist = cloudPermissionWhitelist;
-
-        this.updateCheck = false;
-        this.updateNotifyConsole = false;
-        this.updateNotifyPlayer = false;
-        this.tempJoinTime = 300;
-        this.autoDisableWhitelist = true;
-
-        this.load();
-    }
-
     private File configFile;
     private FileConfiguration config;
 
     private boolean updateCheck;
     private boolean updateNotifyConsole;
     private boolean updateNotifyPlayer;
+    private boolean statsTracking;
     private int tempJoinTime;
     private boolean autoDisableWhitelist;
+
+    public Config(CloudPermissionWhitelist cloudPermissionWhitelist) {
+        this.cloudPermissionWhitelist = cloudPermissionWhitelist;
+
+        this.updateCheck = false;
+        this.updateNotifyConsole = false;
+        this.updateNotifyPlayer = false;
+        this.statsTracking = false;
+        this.tempJoinTime = 300;
+        this.autoDisableWhitelist = true;
+
+        this.load();
+    }
 
     public void load() {
         try {
@@ -39,6 +41,7 @@ public class Config {
             this.updateCheck = this.config.getBoolean("updateCheck.check");
             this.updateNotifyConsole = this.config.getBoolean("updateCheck.notifyConsole");
             this.updateNotifyPlayer = this.config.getBoolean("updateCheck.notifyPlayer");
+            this.statsTracking = this.config.getBoolean("statsTracking");
             this.autoDisableWhitelist = this.config.getBoolean("autoDisableWhitelist");
 
             int tempJoinTimeCheck = config.getInt("tempJoinTime");
@@ -69,6 +72,10 @@ public class Config {
 
     public boolean getAutoDisableWhitelist() {
         return this.autoDisableWhitelist;
+    }
+
+    public boolean getStatsTracking() {
+        return this.statsTracking;
     }
 
     // CONFIG FILE

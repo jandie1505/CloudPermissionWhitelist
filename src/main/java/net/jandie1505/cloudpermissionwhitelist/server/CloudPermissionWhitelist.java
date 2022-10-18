@@ -1,5 +1,6 @@
 package net.jandie1505.cloudpermissionwhitelist.server;
 
+import com.huddu.ApiClient;
 import de.dytanic.cloudnet.wrapper.Wrapper;
 import net.jandie1505.cloudpermissionwhitelist.server.commands.*;
 import net.jandie1505.cloudpermissionwhitelist.server.misc.Config;
@@ -8,6 +9,7 @@ import net.jandie1505.cloudpermissionwhitelist.server.misc.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.JSONObject;
 
 import java.util.*;
 
@@ -19,8 +21,8 @@ public class CloudPermissionWhitelist extends JavaPlugin {
     private Map<UUID, Integer> tempAllowed;
     private Config config;
     private UpdateChecker updateChecker;
-    int mainTask;
-    int consoleUpdateNotificationTask;
+    private int mainTask;
+    private int consoleUpdateNotificationTask;
 
     @Override
     public void onEnable() {
@@ -81,6 +83,17 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                     }
                 }
             }, 0, 144000);
+        }
+
+        if (this.config.getStatsTracking()) {
+            try {
+                JSONObject data = new JSONObject();
+                data.put("info","stats");
+                data.put("uuid", UUID.randomUUID().toString());
+                new ApiClient("CloudPermissionWhitelist", "stats").report(data);
+            } catch (Exception ignored) {
+                // ignored
+            }
         }
 
         if (this.config.getAutoDisableWhitelist()) {
