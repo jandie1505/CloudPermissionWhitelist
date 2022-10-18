@@ -1,5 +1,10 @@
 # CloudPermissionWhitelist
 A plugin for the CloudNet v3 cloud system, which ensures that you can only join certain tasks with a certain permission.
+## Overview
+This plugin is a permission whitelist for CloudNet. When installed, it restricts access to servers (services). Only players with the task-specific permission (e.g.) or wildcard permission can join.
+For example, if you have a `Lobby` task, players can only join services (servers) of this task if they have the permission `cloudpermissionwhitelist.join.Lobby` (or the wildcard permission).
+If you want to give a player temporarily access, you can do this via the `/allowtempjoin <Player>` command. The player can then join for a specific time and can stay on the server until they leaves.
+If you want to give all players temporarily access to a server, you can disable the whitelist with the `/joinprotection` command.
 ## Installation
 1. Download the Plugin from the releases page
 2. Put the CloudPermissionWhitelist.jar into [CloudNet Directory]/local/templates/Global/server/plugins/ (If the plugins folder does not exist create it).
@@ -7,17 +12,18 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 ## Commands
 | Command | Permission | Description |
 |--|--|--|
-| /allowtempjoin [Player] | cloudpermissionwhitelist.allowtempjoin | Allows a player to join the server for 5 minutes |
-| /denytempjoin [Player] | cloudpermissionwhitelist.denytempjoin | Recalls the permission to enter the server temporarily |
-| /listtempjoin | cloudpermissionwhitelist.listtempjoin | Lists all players that can join temporary |
-| /denyalltempjoin | cloudpermissionwhitelist.denyalltempjoin | Recalls the permission to enter the server temorarily for all players |
-| /localkick [Player] | cloudpermissionwhitelist.localkick | Allows to kick players via the /localkick command |
+| `/allowtempjoin <Player> [Time]` | `cloudpermissionwhitelist.allowtempjoin` | Allows a player to join the server temporarily |
+| `/denytempjoin <Player>` | `cloudpermissionwhitelist.denytempjoin` | Recalls the permission to enter the server temporarily |
+| `/listtempjoin` | `cloudpermissionwhitelist.listtempjoin` | Lists all players that can join temporary |
+| `/denyalltempjoin` | `cloudpermissionwhitelist.denyalltempjoin` | Recalls the permission to enter the server temorarily for all players |
+| `/localkick <Player> [Reason]` | `cloudpermissionwhitelist.localkick` | Kick a player only from the current server |
+| `/joinprotection <status/on/off> [Time]` | `cloudpermissionwhitelist.joinprotection` | Enable/disable the whitelist (optional for a specific time) |
 ## Permissions
 | Permission | Description |
 |--|--|
-| cloudpermissionwhitelist.join.* | Allow to join all task's services |
-| cloudpermissionwhitelist.join.[TaskName] | Allow to join a specific task's services |
-| cloudpermissionwhitelist.* | Wildcard permission (All permissions) |
+| `cloudpermissionwhitelist.join.*` | Allow to join all task's services |
+| `cloudpermissionwhitelist.join.<TaskName>` | Allow to join a specific task's services |
+| `cloudpermissionwhitelist.*` | Wildcard permission (All permissions) |
 
 The command permissions are listed at the command section.
 
@@ -25,10 +31,13 @@ Users with the * permission usually also have permission to join all task's serv
 ## Config
 | Option | Type | Description |
 |--|--|--|
-| updateCheck --> check | BOOLEAN | Check for updates |
-| updateCheck --> notifyConsole | BOOLEAN | Send a message to the console if a new update is available |
-| updateCheck --> notifyPlayer | BOOLEAN | Notify admins on join that a new update is available |
-| tempJoinTime | INT | The time (in seconds) a temporarily allowed player has time to join the server (Default: 300, min: 1, max: 1800) |
+| `updateCheck` --> `check` | BOOLEAN | Check for updates |
+| `updateCheck` --> `notifyConsole` | BOOLEAN | Send a message to the console if a new update is available |
+| `updateCheck` --> `notifyPlayer` | BOOLEAN | Notify admins on join that a new update is available |
+| `tempJoinTime` | INT | The time (in seconds) a temporarily allowed player has time to join the server (Default: 300, min: 1, max: 1800) |
+| `autoDisableWhitelist` | BOOLEAN | With this option enabled, the server will automatically disable the vanilla whitelist when the plugin is started (Default: true) |
+| `enforceWhitelist` | BOOLEAN | If enabled, CloudPermissionWhitelist will check if players that are already on the server have the join permission and kick them if they don't (Default: false)  |
+| `statsTracking` | BOOLEAN | If enabled, the plugin will report to a server that it exists. This helps to see how many users are currently using the plugin. (Default: true) |
 ## Version support for lower versions
 Officially, only 1.13 and higher is supported.
 If the plugin is needed for a lower Minecraft version, open the JAR archive with e.g. 7-zip and set the api-version item in the plugin.yml file to the desired version. However, this is not supported and errors may occur.
