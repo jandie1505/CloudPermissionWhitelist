@@ -51,7 +51,32 @@ public class CloudPermissionWhitelist extends JavaPlugin {
         this.getCommand("joinprotection").setExecutor(new CmdJoinProtection(this));
         this.getCommand("joinprotection").setTabCompleter(new CmdJoinProtection(this));
 
-        this.mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+        this.mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.getMainTaskRunnable(), 0, 20);
+
+        if(this.config.getUpdateCheck()) {
+            this.consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.getConsoleUpdateNotificationTaskRunnable(), 0, 144000);
+        }
+
+        if (this.config.getStatsTracking()) {
+            try {
+                JSONObject data = new JSONObject();
+                data.put("info","stats");
+                data.put("uuid", UUID.randomUUID().toString());
+                new ApiClient("CloudPermissionWhitelist", "stats").report(data);
+            } catch (Exception ignored) {
+                // ignored
+            }
+        }
+
+        if (this.config.getAutoDisableWhitelist()) {
+            Bukkit.setWhitelist(false);
+        }
+
+        instance = this;
+    }
+
+    private Runnable getMainTaskRunnable() {
+        return () -> {
 
             // Temp allowed players time
             Map<UUID, Integer> copyMap = new HashMap<>(this.tempAllowed);
@@ -86,36 +111,20 @@ public class CloudPermissionWhitelist extends JavaPlugin {
                     }
                 }
             }
-        }, 0, 20);
 
-        if(this.config.getUpdateCheck()) {
-            this.consoleUpdateNotificationTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-                if(this.config.getUpdateCheck()) {
-                    this.updateChecker.refreshUpdateStatus();
+        };
+    }
 
-                    if(this.config.getUpdateNotifyConsole() && this.updateChecker.isUpdateAvailable()) {
-                        this.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
-                    }
+    private Runnable getConsoleUpdateNotificationTaskRunnable() {
+        return () -> {
+            if(this.config.getUpdateCheck()) {
+                this.updateChecker.refreshUpdateStatus();
+
+                if(this.config.getUpdateNotifyConsole() && this.updateChecker.isUpdateAvailable()) {
+                    this.getLogger().info("An update of CloudPermissionWhitelist is available. Download it here: https://github.com/jandie1505/CloudPermissionWhitelist/releases");
                 }
-            }, 0, 144000);
-        }
-
-        if (this.config.getStatsTracking()) {
-            try {
-                JSONObject data = new JSONObject();
-                data.put("info","stats");
-                data.put("uuid", UUID.randomUUID().toString());
-                new ApiClient("CloudPermissionWhitelist", "stats").report(data);
-            } catch (Exception ignored) {
-                // ignored
             }
-        }
-
-        if (this.config.getAutoDisableWhitelist()) {
-            Bukkit.setWhitelist(false);
-        }
-
-        instance = this;
+        };
     }
 
     // CLOUDNET TASK
