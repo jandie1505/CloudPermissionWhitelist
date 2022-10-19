@@ -3,7 +3,7 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 ## Overview
 This plugin is a permission whitelist for CloudNet. When installed, it restricts access to servers (services). Only players with the task-specific permission or wildcard permission can join.
   
-If you install the plugin, you don't need to configure it. It works out of the box. But there is a configuration.
+If you install the plugin, you don't need to configure it. It works out of the box. But there is a configuration if you need it (you should also copy the config into your template, else the update notifications won't work).
   
 Admins can allow specific players to join a server without the permission or disable the protection of a server for all players via a command.
 ## Installation
