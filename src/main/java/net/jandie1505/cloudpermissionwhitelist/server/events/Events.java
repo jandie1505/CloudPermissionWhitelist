@@ -21,10 +21,10 @@ public class Events implements Listener {
             Player target = event.getPlayer();
             if(this.cloudPermissionWhitelist.hasPlayerJoinPermission(target)) {
                 this.cloudPermissionWhitelist.getLogger().info("Login allowed for " + target.getName());
-                event.allow();
+                //event.allow();
             } else if(this.cloudPermissionWhitelist.isPlayerTempAllowed(target)) {
                 this.cloudPermissionWhitelist.getLogger().info("Login temporary allowed for " + target.getName());
-                event.allow();
+                //event.allow();
             } else {
                 this.cloudPermissionWhitelist.getLogger().info("Login denied for " + target.getName());
                 event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "§cYou don't have the permission to join this server");
