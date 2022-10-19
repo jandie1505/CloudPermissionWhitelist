@@ -13,7 +13,7 @@ Admins can allow specific players to join a server without the permission or dis
 ## Commands
 | Command | Permission | Description |
 |--|--|--|
-| `/allowtempjoin <Player> [Time]` | `cloudpermissionwhitelist.allowtempjoin` | Allows a player to join the server temporarily |
+| `/allowtempjoin <Player> [Time]` | `cloudpermissionwhitelist.allowtempjoin` | Allows a player to join the server temporarily (time p = permanent) |
 | `/denytempjoin <Player>` | `cloudpermissionwhitelist.denytempjoin` | Recalls the permission to enter the server temporarily |
 | `/listtempjoin` | `cloudpermissionwhitelist.listtempjoin` | Lists all players that can join temporary |
 | `/denyalltempjoin` | `cloudpermissionwhitelist.denyalltempjoin` | Recalls the permission to enter the server temporarily for all players |
