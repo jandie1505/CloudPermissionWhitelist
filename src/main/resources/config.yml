@@ -3,20 +3,20 @@
 # CloudPermissionWhitelist v4.0 #
 #################################
 
-# change update check settings
+# change update check settings (Default: true, true, true)
 updateCheck:
   check: true
   notifyConsole: true
   notifyPlayer: true
 
-# default /allowtempjoin time
+# default /allowtempjoin time (Default: 300)
 tempJoinTime: 300
 
-# set if the vanilla whitelist should be disabled when the plugin is enabled
+# set if the vanilla whitelist should be disabled when the plugin is enabled (Default: true)
 autoDisableWhitelist: true
 
-# if enabled, CloudPermissionWhitelist will check if players that are already on the server have the join permission and kick them if they don't
+# if enabled, CloudPermissionWhitelist will check if players that are already on the server have the join permission and kick them if they don't (Default: false)
 enforceWhitelist: false
 
-# send a JSON String which contains a random UUID (will change every time) to huddu.io to report usage statistics
+# if enabled, the plugin will send to a server that it exists. This helps to show how many users the plugin has. Please enable (Default: false).
 statsTracking: false
