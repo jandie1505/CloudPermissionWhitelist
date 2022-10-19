@@ -19,4 +19,4 @@ autoDisableWhitelist: true
 enforceWhitelist: false
 
 # send a JSON String which contains a random UUID (will change every time) to huddu.io to report usage statistics
-statsTracking: true
+statsTracking: false

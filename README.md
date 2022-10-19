@@ -1,10 +1,11 @@
 # CloudPermissionWhitelist
 A plugin for the CloudNet v3 cloud system, which ensures that you can only join certain tasks with a certain permission.
 ## Overview
-This plugin is a permission whitelist for CloudNet. When installed, it restricts access to servers (services). Only players with the task-specific permission (e.g.) or wildcard permission can join.
-For example, if you have a `Lobby` task, players can only join services (servers) of this task if they have the permission `cloudpermissionwhitelist.join.Lobby` (or the wildcard permission).
-If you want to give a player temporarily access, you can do this via the `/allowtempjoin <Player>` command. The player can then join for a specific time and can stay on the server until they leaves.
-If you want to give all players temporarily access to a server, you can disable the whitelist with the `/joinprotection` command.
+This plugin is a permission whitelist for CloudNet. When installed, it restricts access to servers (services). Only players with the task-specific permission or wildcard permission can join.
+  
+If you install the plugin, you don't need to configure it. It works out of the box. But there is a configuration.
+  
+Admins can allow specific players to join a server without the permission or disable the protection of a server for all players via a command.
 ## Installation
 1. Download the Plugin from the releases page
 2. Put the CloudPermissionWhitelist.jar into [CloudNet Directory]/local/templates/Global/server/plugins/ (If the plugins folder does not exist create it).
@@ -15,14 +16,14 @@ If you want to give all players temporarily access to a server, you can disable 
 | `/allowtempjoin <Player> [Time]` | `cloudpermissionwhitelist.allowtempjoin` | Allows a player to join the server temporarily |
 | `/denytempjoin <Player>` | `cloudpermissionwhitelist.denytempjoin` | Recalls the permission to enter the server temporarily |
 | `/listtempjoin` | `cloudpermissionwhitelist.listtempjoin` | Lists all players that can join temporary |
-| `/denyalltempjoin` | `cloudpermissionwhitelist.denyalltempjoin` | Recalls the permission to enter the server temorarily for all players |
+| `/denyalltempjoin` | `cloudpermissionwhitelist.denyalltempjoin` | Recalls the permission to enter the server temporarily for all players |
 | `/localkick <Player> [Reason]` | `cloudpermissionwhitelist.localkick` | Kick a player only from the current server |
 | `/joinprotection <status/on/off> [Time]` | `cloudpermissionwhitelist.joinprotection` | Enable/disable the whitelist (optional for a specific time) |
 ## Permissions
 | Permission | Description |
 |--|--|
-| `cloudpermissionwhitelist.join.*` | Allow to join all task's services |
-| `cloudpermissionwhitelist.join.<TaskName>` | Allow to join a specific task's services |
+| `cloudpermissionwhitelist.join.*` | Allow to join services of all tasks |
+| `cloudpermissionwhitelist.join.<TaskName>` | Allow to join services of a specific task |
 | `cloudpermissionwhitelist.*` | Wildcard permission (All permissions) |
 
 The command permissions are listed at the command section.
@@ -37,7 +38,7 @@ Users with the * permission usually also have permission to join all task's serv
 | `tempJoinTime` | INT | The time (in seconds) a temporarily allowed player has time to join the server (Default: 300, min: 1, max: 1800) |
 | `autoDisableWhitelist` | BOOLEAN | With this option enabled, the server will automatically disable the vanilla whitelist when the plugin is started (Default: true) |
 | `enforceWhitelist` | BOOLEAN | If enabled, CloudPermissionWhitelist will check if players that are already on the server have the join permission and kick them if they don't (Default: false)  |
-| `statsTracking` | BOOLEAN | If enabled, the plugin will report to a server that it exists. This helps to see how many users are currently using the plugin. (Default: true) |
+| `statsTracking` | BOOLEAN | If enabled, the plugin will report to a server that it exists. This helps to see how many users are currently using the plugin. Please enable it (it's disabled by default) (Default: false) |
 ## Version support for lower versions
 Officially, only 1.13 and higher is supported.
 If the plugin is needed for a lower Minecraft version, open the JAR archive with e.g. 7-zip and set the api-version item in the plugin.yml file to the desired version. However, this is not supported and errors may occur.
