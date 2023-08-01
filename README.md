@@ -1,5 +1,79 @@
 # CloudPermissionWhitelist
 A plugin for the CloudNet v3 cloud system, which ensures that you can only join certain tasks with a certain permission.
+
+## This plugin is not developed further. Here is why:
+CloudNet has also implemented a feature which allows to set join permissions on tasks. So there is no need for this plugin anymore.  
+Here is a list how to replace all features of this plugin without installing another plugin (except a permissions system, which you should already have):
+| Feature | Alternative |
+| Join permission `cloudpermissionwhitelist.join.<taskName>` | Add the following to the `properties` section of the task configuration: `"requiredPermission": "<your permission>",` (see CloudNet join permission configuration example) |
+| Local kick command `/localkick` | Use `/minecraft:kick <Player> [Reason]` |
+| Temorary join permissions with `/allowtempjoin` | Use temorary permissions like `/lp user <Player> permission settemp <configured join permission> true <Time>` |
+| Disable join protection for all players with `/joinprotection` | Use temporary permissions like `/lp group default permission settemp <configured join permission> true <Time>` |
+
+### CloudNet join permission configuration example
+```json
+{
+  "name": "SilentLobby",
+  "runtime": "jvm",
+  "hostAddress": "45.81.232.205",
+  "javaCommand": "java",
+  "nameSplitter": "-",
+  "disableIpRewrite": false,
+  "maintenance": false,
+  "autoDeleteOnStop": true,
+  "staticServices": false,
+  "groups": [
+    "SilentLobby"
+  ],
+  "associatedNodes": [],
+  "deletedFilesAfterStop": [],
+  "processConfiguration": {
+    "environment": "MINECRAFT_SERVER",
+    "maxHeapMemorySize": 512,
+    "jvmOptions": [],
+    "processParameters": [],
+    "environmentVariables": {}
+  },
+  "startPort": 44955,
+  "minServiceCount": 1,
+  "templates": [
+    {
+      "prefix": "SilentLobby",
+      "name": "default",
+      "storage": "local",
+      "priority": 0,
+      "alwaysCopyToStaticServices": false
+    },
+    {
+      "prefix": "Global",
+      "name": "Lobby",
+      "storage": "local",
+      "priority": 0,
+      "alwaysCopyToStaticServices": false
+    }
+  ],
+  "deployments": [],
+  "includes": [],
+  "properties": {
+    "requiredPermission": "cloudnet.join.silentlobby", # <--- Here is the join permission
+    "smartConfig": {
+      "enabled": false,
+      "priority": 10,
+      "maxServices": -1,
+      "preparedServices": 0,
+      "smartMinServiceCount": 0,
+      "splitLogicallyOverNodes": true,
+      "directTemplatesAndInclusionsSetup": true,
+      "templateInstaller": "INSTALL_ALL",
+      "autoStopTimeByUnusedServiceInSeconds": 180,
+      "percentOfPlayersToCheckShouldStopTheService": 0,
+      "forAnewInstanceDelayTimeInSeconds": 300,
+      "percentOfPlayersForANewServiceByInstance": 100
+    }
+  }
+}
+```
+
 ## Overview
 This plugin is a permission whitelist for CloudNet. When installed, it restricts access to servers (services). Only players with the task-specific permission or wildcard permission can join.
   
