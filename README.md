@@ -3,6 +3,7 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 
 ## This plugin is not developed further. Here is why:
 CloudNet has also implemented a feature which allows to set join permissions on tasks. So there is no need for this plugin anymore.  
+
 Here is a list how to replace all features of this plugin without installing another plugin (except a permissions system, which you should already have):
 | Feature | Alternative |
 |--|--|
