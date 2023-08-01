@@ -16,7 +16,7 @@ Here is a list how to replace all features of this plugin without installing ano
 {
   "name": "SilentLobby",
   "runtime": "jvm",
-  "hostAddress": "45.81.232.205",
+  "hostAddress": "127.0.0.1",
   "javaCommand": "java",
   "nameSplitter": "-",
   "disableIpRewrite": false,
@@ -41,13 +41,6 @@ Here is a list how to replace all features of this plugin without installing ano
     {
       "prefix": "SilentLobby",
       "name": "default",
-      "storage": "local",
-      "priority": 0,
-      "alwaysCopyToStaticServices": false
-    },
-    {
-      "prefix": "Global",
-      "name": "Lobby",
       "storage": "local",
       "priority": 0,
       "alwaysCopyToStaticServices": false
