@@ -5,6 +5,7 @@ A plugin for the CloudNet v3 cloud system, which ensures that you can only join 
 CloudNet has also implemented a feature which allows to set join permissions on tasks. So there is no need for this plugin anymore.  
 Here is a list how to replace all features of this plugin without installing another plugin (except a permissions system, which you should already have):
 | Feature | Alternative |
+|--|--|
 | Join permission `cloudpermissionwhitelist.join.<taskName>` | Add the following to the `properties` section of the task configuration: `"requiredPermission": "<your permission>",` (see CloudNet join permission configuration example) |
 | Local kick command `/localkick` | Use `/minecraft:kick <Player> [Reason]` |
 | Temorary join permissions with `/allowtempjoin` | Use temorary permissions like `/lp user <Player> permission settemp <configured join permission> true <Time>` |
